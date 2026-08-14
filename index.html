@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Corrida do Gustavo</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏁</text></svg>" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- ===================== MENU ===================== -->
+      <section id="menu-screen" class="screen">
+        <div class="menu-bg"></div>
+        <div class="menu-content">
+          <h1 class="game-title">
+            <span class="title-line1">CORRIDA</span>
+            <span class="title-line2">DO <em>GUSTAVO</em></span>
+          </h1>
+          <p class="menu-subtitle">Circuito de Monte Carlo &middot; Primeira Pessoa &middot; 3 Voltas</p>
+
+          <div class="vehicle-select" id="vehicle-select"></div>
+
+          <button id="start-btn" class="btn-start" disabled>Escolha um veículo</button>
+
+          <div class="controls-hint">
+            <span><kbd>W</kbd> Acelerar</span>
+            <span><kbd>S</kbd> Frear / Ré</span>
+            <span><kbd>A</kbd> Esquerda</span>
+            <span><kbd>D</kbd> Direita</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== COUNTDOWN ===================== -->
+      <section id="countdown-screen" class="screen hidden">
+        <div class="countdown-number" id="countdown-number">3</div>
+      </section>
+
+      <!-- ===================== RACE ===================== -->
+      <section id="race-screen" class="screen hidden">
+        <canvas id="race-canvas"></canvas>
+
+        <div class="hud">
+          <div class="hud-top-left">
+            <div class="lap-panel">
+              <span class="lap-label">VOLTA</span>
+              <span class="lap-value"><span id="hud-lap">1</span>/<span id="hud-total-laps">3</span></span>
+            </div>
+            <div class="pos-panel">
+              <span id="hud-position">1º</span><span class="pos-of">/5</span>
+            </div>
+          </div>
+
+          <div class="hud-top-right">
+            <div class="timer" id="hud-timer">00:00.0</div>
+            <div class="distance">
+              <span id="hud-distance">0</span> m <span class="dim">/ voltas: </span><span id="hud-total-distance">0</span> m
+            </div>
+          </div>
+
+          <canvas id="minimap-canvas" class="minimap"></canvas>
+
+          <div class="hud-bottom-left">
+            <div class="vehicle-tag" id="hud-vehicle-name">F1</div>
+          </div>
+
+          <div class="hud-bottom-right speedo">
+            <svg viewBox="0 0 200 120" class="speedo-svg">
+              <path id="speedo-arc-bg" d="M 15 105 A 85 85 0 0 1 185 105" />
+              <path id="speedo-arc-fill" d="M 15 105 A 85 85 0 0 1 185 105" />
+            </svg>
+            <div class="speedo-value"><span id="hud-speed">0</span><small>km/h</small></div>
+          </div>
+
+          <div class="cockpit-frame" id="cockpit-frame"></div>
+        </div>
+
+        <div id="race-message" class="race-message hidden"></div>
+      </section>
+
+      <!-- ===================== RESULTS ===================== -->
+      <section id="results-screen" class="screen hidden">
+        <div class="results-content">
+          <h2 class="results-title">Corrida Finalizada!</h2>
+          <ol id="results-list" class="results-list"></ol>
+          <button id="restart-btn" class="btn-start">Voltar ao Menu</button>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

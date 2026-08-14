@@ -1,0 +1,17 @@
+{
+  "name": "corrida-do-gustavo",
+  "version": "1.0.0",
+  "description": "Jogo de corrida de veículos em primeira pessoa no circuito de Monte Carlo",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.160.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.11"
+  }
+}
