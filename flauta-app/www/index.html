@@ -9,14 +9,49 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 17V5l9-2v12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="7.5" cy="17" r="2.6" fill="currentColor"/><circle cx="16.5" cy="15" r="2.6" fill="currentColor"/></svg></div>
-    <h1>Flauta Guia</h1>
-    <span class="topbar-sub" id="topbar-sub">Afinação</span>
+    <img class="logo" src="img/logo-mark.svg" alt="" aria-hidden="true">
+    <h1>Flauta <span class="gold">Guia</span></h1>
+    <span class="topbar-sub" id="topbar-sub">Início</span>
   </header>
 
   <main>
+    <!-- ============ INÍCIO ============ -->
+    <section class="screen active" id="screen-inicio">
+      <div class="hero">
+        <div class="hero-text">
+          <div class="kicker" id="home-greet">Olá!</div>
+          <h2 class="hero-title">Pronto para<br>praticar?</h2>
+          <p class="muted" id="home-sub">Comece afinando a flauta.</p>
+        </div>
+        <div class="ring" id="home-ring">
+          <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="home-ring-fg"/></svg>
+          <div class="ring-label"><b id="home-done">0</b><small id="home-total">de 13</small></div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-big btn-continue" id="home-continue">
+        <span class="bc-kicker">Continuar</span>
+        <span class="bc-title" id="home-continue-title">Lição 1</span>
+      </button>
+
+      <button class="tile tile-wide" data-go="afinar">
+        <span class="tile-ico ti-blue"><svg viewBox="0 0 24 24"><path d="M9 2v8a3 3 0 0 0 6 0V2M12 13v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="tile-body"><b>Afinar a flauta</b><small>Lá de referência e afinador</small></span>
+        <span class="tile-go">›</span>
+      </button>
+      <div class="tiles">
+        <button class="tile" data-go="notas"><span class="tile-ico ti-gold"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg></span><b>Digitações</b><small>37 notas</small></button>
+        <button class="tile" data-go="descobrir"><span class="tile-ico ti-violet"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><b>Descobrir</b><small>Que nota é esta?</small></button>
+        <button class="tile" data-go="licoes"><span class="tile-ico ti-green"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><b>Lições</b><small>Passo a passo</small></button>
+        <button class="tile" data-go="guia"><span class="tile-ico ti-rose"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6a3 3 0 0 0-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 4v14h-7" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><b>Guia</b><small>Postura e sopro</small></button>
+      </div>
+      <div class="card tip-day">
+        <div class="kicker">Dica do dia</div>
+        <p id="home-tip"></p>
+      </div>
+    </section>
+
     <!-- ============ AFINAR ============ -->
-    <section class="screen active" id="screen-afinar">
+    <section class="screen" id="screen-afinar">
       <div class="card">
         <h2>1. Ouça o Lá de referência</h2>
         <p class="muted">Antes de começar, afine a flauta com o Lá (A4).</p>
@@ -231,12 +266,53 @@
   </main>
 
   <nav class="bottomnav" id="bottomnav">
-    <button class="nav-btn active" data-screen="afinar"><svg viewBox="0 0 24 24" class="ico"><path d="M9 2v8a3 3 0 0 0 6 0V2M12 13v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Afinar</button>
+    <button class="nav-btn active" data-screen="inicio"><svg viewBox="0 0 24 24" class="ico"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Início</button>
+    <button class="nav-btn" data-screen="afinar"><svg viewBox="0 0 24 24" class="ico"><path d="M9 2v8a3 3 0 0 0 6 0V2M12 13v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Afinar</button>
     <button class="nav-btn" data-screen="notas"><svg viewBox="0 0 24 24" class="ico"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg>Notas</button>
     <button class="nav-btn" data-screen="licoes"><svg viewBox="0 0 24 24" class="ico"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Lições</button>
     <button class="nav-btn" data-screen="descobrir"><svg viewBox="0 0 24 24" class="ico"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Descobrir</button>
-    <button class="nav-btn" data-screen="guia"><svg viewBox="0 0 24 24" class="ico"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6a3 3 0 0 0-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 4v14h-7" fill="none" stroke="currentColor" stroke-width="2"/></svg>Guia</button>
   </nav>
+
+  <!-- Abertura animada -->
+  <div class="intro" id="intro">
+    <div class="intro-glow"></div>
+    <div class="intro-logo" id="intro-logo"></div>
+    <div class="intro-word"><span>Flauta</span> <span class="gold">Guia</span></div>
+    <div class="intro-tag">Aprenda flauta transversal</div>
+    <div class="intro-bar"><i></i></div>
+  </div>
+
+  <!-- Apresentação (primeira vez) -->
+  <div class="onb" id="onb" hidden>
+    <button class="onb-skip" id="onb-skip">Pular</button>
+    <div class="onb-track" id="onb-track">
+      <div class="onb-slide">
+        <div class="onb-art art-tuner">
+          <svg viewBox="0 0 200 120"><path d="M20 100 A80 80 0 0 1 180 100" class="oa-track"/><path d="M20 100 A80 80 0 0 1 180 100" class="oa-arc"/><g class="oa-needle"><line x1="100" y1="100" x2="100" y2="34"/></g><circle cx="100" cy="100" r="8" class="oa-hub"/></svg>
+          <div class="oa-note">Lá4</div>
+        </div>
+        <h2>Afine em segundos</h2>
+        <p>Toque o Lá de referência e o afinador mostra se é preciso puxar ou empurrar a cabeça da flauta.</p>
+      </div>
+      <div class="onb-slide">
+        <div class="onb-art art-flute"><div class="flute" id="onb-flute"></div><div class="oa-name" id="onb-name">Sol4</div></div>
+        <h2>Cada digitação, tecla por tecla</h2>
+        <p>Veja exatamente quais teclas apertar em todas as 37 notas, do Dó grave ao Dó agudo.</p>
+      </div>
+      <div class="onb-slide">
+        <div class="onb-art art-mic">
+          <div class="mic-rings"><i></i><i></i><i></i></div>
+          <div class="mic-core"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+        <h2>O app escuta você</h2>
+        <p>Toque a nota e ele confere na hora. As lições só avançam quando a nota está certa.</p>
+      </div>
+    </div>
+    <div class="onb-foot">
+      <div class="onb-dots" id="onb-dots"><i class="on"></i><i></i><i></i></div>
+      <button class="btn btn-primary onb-next" id="onb-next">Próximo</button>
+    </div>
+  </div>
 
   <div class="toast" id="toast" hidden></div>
   <div class="confetti" id="confetti" aria-hidden="true"></div>

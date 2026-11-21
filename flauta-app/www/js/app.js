@@ -21,7 +21,7 @@ const state = {
   tolerance: store.get('tolerance', 40),
   completed: new Set(store.get('completed', [])),
   unlockAll: store.get('unlockAll', false),
-  screen: 'afinar',
+  screen: 'inicio',
 };
 
 const $ = (id) => document.getElementById(id);
@@ -103,7 +103,7 @@ function fingersHTML(keys) {
 }
 
 // ---------- Navegação ----------
-const SCREEN_TITLES = { afinar: 'Afinação', notas: 'Digitações', licoes: 'Lições', descobrir: 'Descobrir a nota', guia: 'Guia' };
+const SCREEN_TITLES = { inicio: 'Início', afinar: 'Afinação', notas: 'Digitações', licoes: 'Lições', descobrir: 'Descobrir a nota', guia: 'Guia' };
 
 function showScreen(name) {
   if (state.screen === name) return;
@@ -114,6 +114,7 @@ function showScreen(name) {
   $('topbar-sub').textContent = SCREEN_TITLES[name];
   window.scrollTo(0, 0);
   if (name === 'licoes') renderLessonList();
+  if (name === 'inicio') renderHome();
 }
 
 function leaveScreen(name) {
@@ -612,7 +613,119 @@ function celebrate() {
   celebrate._t = setTimeout(() => { box.innerHTML = ''; }, 3500);
 }
 
+// ---------- Tela Início ----------
+const TIPS_DAY = [
+  'Aqueça a flauta tocando notas longas por um minuto antes de afinar: flauta fria soa mais baixo.',
+  'Para subir uma oitava, sopre mais rápido, e não mais forte. Diminua a abertura dos lábios.',
+  'Mantenha os dedos curvados e perto das teclas, mesmo quando estiverem levantados.',
+  'Inspire pela barriga, sem levantar os ombros. Solte o ar como um fio longo e constante.',
+  'Estude um pouco todos os dias: 15 minutos diários rendem mais que duas horas uma vez por semana.',
+  'Se o som sair com muito ar, gire a flauta levemente para fora e diminua a abertura dos lábios.',
+  'Comece cada nota com a língua dizendo "tu", sem voz. Evite começar com a garganta.',
+  'Depois de tocar, passe a vareta com um pano por dentro de cada parte da flauta.',
+];
+
+function nextLessonIndex() {
+  const i = LESSONS.findIndex((l) => !state.completed.has(l.id));
+  return i === -1 ? LESSONS.length - 1 : i;
+}
+
+function renderHome() {
+  const h = new Date().getHours();
+  $('home-greet').textContent = h < 5 ? 'Boa noite' : h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+  const done = LESSONS.filter((l) => state.completed.has(l.id)).length;
+  const total = LESSONS.length;
+  $('home-done').textContent = done;
+  $('home-total').textContent = `de ${total} lições`;
+  const c = 2 * Math.PI * 50;
+  const fg = $('home-ring-fg');
+  fg.style.strokeDasharray = c;
+  fg.style.strokeDashoffset = c * (1 - done / total);
+  const i = nextLessonIndex();
+  const allDone = done === total;
+  $('home-continue-title').textContent = allDone ? 'Todas concluídas! Revise qualquer lição' : `Lição ${i + 1} · ${LESSONS[i].title}`;
+  $('home-continue').querySelector('.bc-kicker').textContent = done === 0 ? 'Começar' : allDone ? 'Parabéns' : 'Continuar';
+  $('home-sub').textContent = done === 0 ? 'Comece afinando a flauta, depois faça a primeira lição.' : allDone ? 'Você concluiu todas as lições.' : `Você já concluiu ${done} ${done === 1 ? 'lição' : 'lições'}. Continue assim!`;
+  const day = Math.floor(Date.now() / 86400000);
+  $('home-tip').textContent = TIPS_DAY[day % TIPS_DAY.length];
+}
+
+$('home-continue').addEventListener('click', () => {
+  const done = LESSONS.filter((l) => state.completed.has(l.id)).length;
+  showScreen('licoes');
+  if (done < LESSONS.length) openLesson(nextLessonIndex());
+});
+document.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => showScreen(b.dataset.go)));
+
+// ---------- Abertura e apresentação ----------
+async function runIntro() {
+  const intro = $('intro');
+  try {
+    const svg = await (await fetch('img/logo-mark.svg')).text();
+    $('intro-logo').innerHTML = svg;
+  } catch {
+    $('intro-logo').innerHTML = '<img src="img/logo-mark.svg" alt="">';
+  }
+  intro.classList.add('play');
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    intro.classList.add('out');
+    setTimeout(() => {
+      intro.hidden = true;
+      if (!store.get('onboarded', false)) startOnboarding();
+    }, 450);
+  };
+  intro.addEventListener('click', finish);
+  setTimeout(finish, 2800);
+}
+
+let onbTimer = 0;
+function startOnboarding() {
+  const onb = $('onb');
+  onb.hidden = false;
+  const slides = onb.querySelectorAll('.onb-slide');
+  const dots = onb.querySelectorAll('#onb-dots i');
+  const flute = createFlute($('onb-flute'));
+  const demo = [67, 69, 71, 72, 74, 76, 65, 60];
+  let d = 0;
+  const showDemo = () => {
+    const n = noteInfo(demo[d % demo.length]);
+    flute.show(n.fingering);
+    $('onb-name').textContent = `${n.name}${n.octave}`;
+    d++;
+  };
+  showDemo();
+  onbTimer = setInterval(showDemo, 1300);
+  let idx = 0;
+  const go = (i) => {
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    $('onb-track').style.transform = `translateX(${-idx * 100}%)`;
+    dots.forEach((dot, k) => dot.classList.toggle('on', k === idx));
+    $('onb-next').textContent = idx === slides.length - 1 ? 'Começar' : 'Próximo';
+  };
+  const end = () => {
+    clearInterval(onbTimer);
+    store.set('onboarded', true);
+    onb.classList.add('out');
+    setTimeout(() => { onb.hidden = true; }, 400);
+  };
+  $('onb-next').onclick = () => (idx === slides.length - 1 ? end() : go(idx + 1));
+  $('onb-skip').onclick = end;
+  let x0 = null;
+  onb.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+  onb.addEventListener('touchend', (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 50) go(idx + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+}
+
 // ---------- Início ----------
+renderHome();
+runIntro();
 $('calib-hz').textContent = state.a4;
 idleNeedle($('tuner-needle'));
 renderGrid(4);
