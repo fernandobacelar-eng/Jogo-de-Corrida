@@ -148,3 +148,50 @@ export function describeFingering(keys) {
   }
   return { left, right };
 }
+
+// Digitações alternativas aceitas na busca por digitação.
+export const ALT_FINGERINGS = [
+  { midi: 70, keys: ['T', 'L1', 'R1', 'Eb'], label: 'digitação "1 e 1"' },
+  { midi: 82, keys: ['T', 'L1', 'R1', 'Eb'], label: 'digitação "1 e 1"' },
+  { midi: 70, keys: ['Tb', 'L1', 'R1', 'Eb'], label: 'alavanca de Si♭ + "1 e 1"' },
+  { midi: 62, keys: ['T', 'L1', 'L2', 'L3', 'R1', 'R2', 'R3', 'Eb'], label: 'com a tecla de Mi♭' },
+  { midi: 60, keys: ['T', 'L1', 'L2', 'L3', 'R1', 'R2', 'R3', 'C'], label: 'só a tecla de Dó' },
+];
+
+// Normaliza: a tecla de Dó grave fecha também a de Dó♯ pelo mecanismo.
+function normalize(keys) {
+  const s = new Set(keys);
+  if (s.has('C')) s.add('Cs');
+  return s;
+}
+
+// Procura notas pela digitação. Retorna { exact: [...], near: [...] }.
+// Cada item: { midi, keys, label, missing: [chaves a apertar], extra: [chaves a soltar] }.
+export function findByFingering(keys) {
+  const sel = normalize(keys);
+  const candidates = [];
+  for (let m = MIN_MIDI; m <= MAX_MIDI; m++) candidates.push({ midi: m, keys: noteInfo(m).fingering, label: '' });
+  candidates.push(...ALT_FINGERINGS);
+  const seen = new Set();
+  const results = [];
+  for (const c of candidates) {
+    const ref = normalize(c.keys);
+    const missing = [...ref].filter((k) => !sel.has(k));
+    const extra = [...sel].filter((k) => !ref.has(k));
+    const key = c.midi + ':' + c.label;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    results.push({ ...c, missing, extra, diff: missing.length + extra.length });
+  }
+  const exact = [];
+  for (const r of results) if (r.diff === 0 && !exact.some((e) => e.midi === r.midi)) exact.push(r);
+  // evita repetir a mesma nota (digitação principal e alternativa)
+  const exactMidis = new Set(exact.map((r) => r.midi));
+  const near = results
+    .filter((r) => r.diff > 0 && r.diff <= 2 && !exactMidis.has(r.midi))
+    .sort((a, b) => a.diff - b.diff || a.midi - b.midi);
+  const nearUnique = [];
+  const nearSeen = new Set();
+  for (const r of near) if (!nearSeen.has(r.midi)) { nearSeen.add(r.midi); nearUnique.push(r); }
+  return { exact: exact.sort((a, b) => a.midi - b.midi), near: nearUnique.slice(0, 4) };
+}

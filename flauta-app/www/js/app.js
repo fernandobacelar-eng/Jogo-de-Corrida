@@ -1,4 +1,4 @@
-import { noteInfo, fullName, midiToFreq, freqToMidiFloat, describeFingering, MIN_MIDI, MAX_MIDI } from './notes.js';
+import { noteInfo, fullName, midiToFreq, freqToMidiFloat, describeFingering, findByFingering, KEY_INFO, MIN_MIDI, MAX_MIDI } from './notes.js';
 import { PitchListener, playTone, audioContext } from './audio.js';
 import { createFlute, renderStaff } from './flute.js';
 import { LESSONS } from './lessons.js';
@@ -101,7 +101,7 @@ function fingersHTML(keys) {
 }
 
 // ---------- Navegação ----------
-const SCREEN_TITLES = { afinar: 'Afinação', notas: 'Digitações', licoes: 'Lições', guia: 'Guia' };
+const SCREEN_TITLES = { afinar: 'Afinação', notas: 'Digitações', licoes: 'Lições', descobrir: 'Descobrir a nota', guia: 'Guia' };
 
 function showScreen(name) {
   if (state.screen === name) return;
@@ -480,6 +480,76 @@ $('lesson-play').addEventListener('click', () => {
 });
 $('lesson-again').addEventListener('click', () => openLesson(lesson.index));
 $('lesson-next').addEventListener('click', () => openLesson(lesson.index + 1));
+
+// ---------- Descobrir ----------
+const descKeys = new Set();
+const descFlute = createFlute($('desc-flute'), {
+  onKeyTap(k) {
+    if (descKeys.has(k)) descKeys.delete(k);
+    else {
+      descKeys.add(k);
+      // polegar: tecla de Si e alavanca de Si♭ não se apertam juntas
+      if (k === 'T') descKeys.delete('Tb');
+      if (k === 'Tb') descKeys.delete('T');
+    }
+    renderDescobrir();
+  },
+});
+
+function keyName(k) {
+  const info = KEY_INFO[k];
+  const [first, ...rest] = info.name.split(' ');
+  const side = info.hand === 'L' ? 'esquerdo' : 'direito';
+  return [first, side, ...rest].join(' ');
+}
+
+function renderDescobrir() {
+  const keys = [...descKeys];
+  descFlute.show(keys);
+  $('desc-fingers').innerHTML = keys.length ? fingersHTML(keys) : '';
+  const box = $('desc-result');
+  if (!keys.length) {
+    box.innerHTML = '<p class="muted">Nenhuma tecla marcada. Comece pelo polegar e pelos dedos da mão esquerda.</p>';
+    return;
+  }
+  const { exact, near } = findByFingering(keys);
+  let html = '';
+  if (exact.length) {
+    html += `<div class="kicker">${exact.length > 1 ? 'Com essa digitação saem estas notas' : 'Essa digitação é da nota'}</div>`;
+    html += exact.map((r) => {
+      const n = noteInfo(r.midi);
+      return `<div class="match">
+        <div class="match-name">${n.name}${n.octave}</div>
+        <div class="match-info">${metaHTML(n)}${r.label ? `<br><b>${r.label}</b>` : ''}<br><span class="muted">${n.register.hint}</span></div>
+        <button class="btn btn-round play-match" data-midi="${r.midi}" aria-label="Ouvir ${n.name}${n.octave}">🔊</button>
+      </div>`;
+    }).join('');
+    if (exact.length > 1) html += '<p class="muted">O que escolhe a nota é o sopro: mais lento para a mais grave, mais rápido para a mais aguda.</p>';
+  } else {
+    html += '<div class="kicker">Não é uma digitação padrão</div><p>Nenhuma nota usa exatamente essa combinação de teclas.</p>';
+  }
+  if (near.length && !exact.length) {
+    html += '<div class="kicker" style="margin-top:12px">Notas mais próximas</div>';
+    html += near.map((r) => {
+      const n = noteInfo(r.midi);
+      const parts = [];
+      if (r.missing.length) parts.push('aperte ' + r.missing.filter((k) => !(k === 'Cs' && r.missing.includes('C'))).map(keyName).join(', '));
+      if (r.extra.length) parts.push('solte ' + r.extra.map(keyName).join(', '));
+      return `<div class="match near">
+        <div class="match-name">${n.name}${n.octave}</div>
+        <div class="match-info">${parts.join('; ')}</div>
+        <button class="btn btn-round play-match" data-midi="${r.midi}" aria-label="Ouvir">🔊</button>
+      </div>`;
+    }).join('');
+  }
+  box.innerHTML = html;
+  box.querySelectorAll('.play-match').forEach((b) => b.addEventListener('click', () => {
+    playTone(midiToFreq(+b.dataset.midi, state.a4), { duration: 1.5 });
+  }));
+}
+
+$('desc-clear').addEventListener('click', () => { descKeys.clear(); renderDescobrir(); });
+renderDescobrir();
 
 // ---------- Guia ----------
 const guiaFlute = createFlute($('guia-flute'));

@@ -45,9 +45,10 @@ function stop(grad, offset, cssVar, extra = '') {
 }
 
 export function createFlute(container, { onKeyTap } = {}) {
+  const interactive = !!onKeyTap;
   const id = 'fl' + (++uid);
   const W = 560, H = 160;
-  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'flute-svg', role: 'img', 'aria-label': 'Desenho da flauta com as teclas' });
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'flute-svg' + (interactive ? ' interactive' : ''), role: 'img', 'aria-label': 'Desenho da flauta com as teclas' });
 
   // ---------- gradientes ----------
   const defs = el('defs', {}, svg);
@@ -127,7 +128,7 @@ export function createFlute(container, { onKeyTap } = {}) {
   const nodes = {};
   for (const k of KEYS) {
     const hand = LEFT.has(k.id) ? 'left' : 'right';
-    const g = el('g', { class: `key ${hand} ${k.type}${k.back ? ' back' : ''}${k.small ? ' small' : ''}`, 'data-key': k.id, tabindex: -1 }, svg);
+    const g = el('g', { class: `key ${hand} ${k.type}${k.back ? ' back' : ''}${k.small ? ' small' : ''}`, 'data-key': k.id }, svg);
     const fillOpen = `url(#${id}cup)`;
     const fillOn = `url(#${id}${hand})`;
     let shape, halo, cx, cy;
@@ -149,6 +150,11 @@ export function createFlute(container, { onKeyTap } = {}) {
       const ly = k.id === 'C' ? cy + k.h / 2 + 12 : k.id === 'Cs' ? cy - k.h / 2 - 5 : cy + k.h / 2 + 13;
       el('text', { x: k.id === 'Cs' || k.id === 'C' ? cx + 16 : cx, y: k.id === 'Cs' ? cy + 4 : k.id === 'C' ? cy + 4 : ly, 'text-anchor': k.id === 'Cs' || k.id === 'C' ? 'start' : 'middle', class: 'key-label' }, g).textContent = k.label;
       void labelBelow;
+    }
+    if (onKeyTap) {
+      // área de toque maior que o desenho, para facilitar no celular
+      if (k.type === 'cup') el('circle', { cx, cy, r: k.r + (k.small ? 6 : 8), class: 'hit' }, g);
+      else el('rect', { x: cx - k.w / 2 - 8, y: cy - k.h / 2 - 7, width: k.w + 16, height: k.h + 14, rx: 8, class: 'hit', transform: `rotate(${k.rot} ${cx} ${cy})` }, g);
     }
     shape.dataset.open = fillOpen;
     shape.dataset.on = fillOn;

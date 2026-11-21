@@ -238,6 +238,17 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 12px 0; }
 .done-icon { width: 64px; height: 64px; margin: 4px auto 8px; border-radius: 50%; display: grid; place-items: center; font-size: 34px; background: var(--good); color: #fff; }
 .done.fail .done-icon { background: var(--warn); }
 
+/* Descobrir */
+.flute-svg.interactive .key { cursor: pointer; }
+.hit { fill: transparent; }
+.key:focus, .key:focus-visible { outline: none; }
+.match { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.match:first-of-type { border-top: 0; }
+.match-name { font-size: 30px; font-weight: 800; min-width: 92px; line-height: 1.1; }
+.match.near .match-name { font-size: 22px; color: var(--muted); }
+.match-info { flex: 1; font-size: 14px; }
+.play-match { flex: 0 0 48px; width: 48px; height: 48px; font-size: 20px; }
+
 /* Guia */
 .acc summary { font-weight: 700; font-size: 17px; cursor: pointer; min-height: 32px; }
 .acc p { font-size: 15px; }
