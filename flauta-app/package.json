@@ -1,0 +1,18 @@
+{
+  "name": "flauta-guia",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aplicativo para aprender flauta transversal: digitações, afinador e lições com detecção de nota.",
+  "scripts": {
+    "serve": "python3 -m http.server 8123 --directory www",
+    "sync": "cap sync android",
+    "apk": "cap sync android && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.6.10",
+    "@capacitor/core": "^7.6.10"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.6.10"
+  }
+}

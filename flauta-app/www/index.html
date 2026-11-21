@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14213d">
+  <title>Flauta Guia</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Flauta Guia</h1>
+    <span class="topbar-sub" id="topbar-sub">Afinação</span>
+  </header>
+
+  <main>
+    <!-- ============ AFINAR ============ -->
+    <section class="screen active" id="screen-afinar">
+      <div class="card">
+        <h2>1. Ouça o Lá de referência</h2>
+        <p class="muted">Antes de começar, afine a flauta com o Lá (A4).</p>
+        <button class="btn btn-primary btn-big" id="btn-ref">▶ Tocar Lá de referência</button>
+        <div class="calib">
+          <button class="btn btn-round" id="calib-minus" aria-label="Diminuir frequência">−</button>
+          <div class="calib-value"><strong id="calib-hz">440</strong> Hz<small>frequência do Lá</small></div>
+          <button class="btn btn-round" id="calib-plus" aria-label="Aumentar frequência">+</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2. Toque o Lá na sua flauta</h2>
+        <p class="muted">Digitação do Lá: polegar, indicador e médio esquerdos + mindinho direito no Mi♭.</p>
+        <button class="btn btn-mic" id="btn-tuner">🎤 Ouvir minha flauta</button>
+        <div class="tuner" id="tuner">
+          <div class="tuner-note"><span id="tuner-note">–</span><small id="tuner-hz"></small></div>
+          <div class="meter">
+            <div class="meter-scale"><span>−50</span><span>−25</span><span>0</span><span>+25</span><span>+50</span></div>
+            <div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="tuner-needle"></div></div>
+          </div>
+          <div class="tuner-msg" id="tuner-msg">Toque uma nota longa e estável.</div>
+        </div>
+      </div>
+
+      <div class="card tip">
+        <strong>Como corrigir a afinação</strong>
+        <p><b>Som alto (agulha para a direita):</b> puxe a cabeça da flauta um pouco para fora.</p>
+        <p><b>Som baixo (agulha para a esquerda):</b> empurre a cabeça da flauta para dentro.</p>
+        <p class="muted">Mexa poucos milímetros de cada vez. Aqueça a flauta tocando por um minuto antes de afinar: flauta fria soa mais baixo.</p>
+      </div>
+    </section>
+
+    <!-- ============ NOTAS ============ -->
+    <section class="screen" id="screen-notas">
+      <div class="card note-card">
+        <div class="note-head-row">
+          <div class="staff" id="notas-staff"></div>
+          <div class="note-title">
+            <div class="note-name" id="notas-name">Lá4</div>
+            <div class="note-meta" id="notas-meta"></div>
+          </div>
+        </div>
+        <div class="flute" id="notas-flute"></div>
+        <div class="legend">
+          <span><i class="dot dot-left"></i>Mão esquerda</span>
+          <span><i class="dot dot-right"></i>Mão direita</span>
+          <span><i class="dot dot-open"></i>Aberta</span>
+        </div>
+        <div class="fingers" id="notas-fingers"></div>
+        <p class="note-tip" id="notas-tip"></p>
+        <div class="row">
+          <button class="btn btn-primary" id="notas-play">🔊 Ouvir nota</button>
+          <button class="btn btn-mic" id="notas-listen">🎤 Detectar pelo som</button>
+        </div>
+        <div class="live" id="notas-live" hidden>
+          <span id="notas-live-text">Toque uma nota…</span>
+          <div class="meter small"><div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="notas-needle"></div></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tabs" id="octave-tabs" role="tablist">
+          <button class="tab" data-oct="4" role="tab">Grave</button>
+          <button class="tab active" data-oct="5" role="tab">Média</button>
+          <button class="tab" data-oct="6" role="tab">Aguda</button>
+        </div>
+        <div class="note-grid" id="note-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ LIÇÕES ============ -->
+    <section class="screen" id="screen-licoes">
+      <div id="lesson-list-view">
+        <div class="card">
+          <h2>Lições</h2>
+          <p class="muted">Siga em ordem. O app escuta você e só avança quando a nota estiver certa.</p>
+          <label class="field">Tolerância de afinação
+            <select id="tolerance">
+              <option value="40">Iniciante (±40 cents)</option>
+              <option value="25">Intermediário (±25 cents)</option>
+              <option value="12">Avançado (±12 cents)</option>
+            </select>
+          </label>
+        </div>
+        <ol class="lesson-list" id="lesson-list"></ol>
+        <button class="btn btn-ghost" id="btn-unlock">Desbloquear todas as lições</button>
+      </div>
+
+      <div id="lesson-view" hidden>
+        <div class="card">
+          <button class="btn btn-ghost btn-back" id="lesson-back">← Lições</button>
+          <h2 id="lesson-title"></h2>
+          <p class="muted" id="lesson-intro"></p>
+          <div class="chips" id="lesson-chips"></div>
+        </div>
+        <div class="card note-card" id="lesson-stage">
+          <div class="note-head-row">
+            <div class="staff" id="lesson-staff"></div>
+            <div class="note-title">
+              <div class="kicker">Toque agora</div>
+              <div class="note-name" id="lesson-name"></div>
+              <div class="note-meta" id="lesson-meta"></div>
+            </div>
+          </div>
+          <div class="flute" id="lesson-flute"></div>
+          <div class="fingers" id="lesson-fingers"></div>
+          <div class="feedback" id="lesson-feedback">
+            <div class="feedback-text" id="lesson-fb-text">Toque a nota indicada.</div>
+            <div class="meter"><div class="meter-track"><div class="meter-ok" id="lesson-ok-zone"></div><div class="meter-needle" id="lesson-needle"></div></div></div>
+            <div class="hold"><div class="hold-bar" id="lesson-hold"></div></div>
+          </div>
+          <div class="row">
+            <button class="btn" id="lesson-play">🔊 Ouvir</button>
+            <button class="btn" id="lesson-skip">Pular nota ›</button>
+          </div>
+        </div>
+        <div class="card done" id="lesson-done" hidden>
+          <div class="done-icon">✓</div>
+          <h2>Lição concluída!</h2>
+          <p id="lesson-done-text"></p>
+          <div class="row">
+            <button class="btn" id="lesson-again">Repetir</button>
+            <button class="btn btn-primary" id="lesson-next">Próxima lição ›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EMBOCADURA ============ -->
+    <section class="screen" id="screen-guia">
+      <div class="card">
+        <h2>Como ler a digitação</h2>
+        <div class="flute" id="guia-flute"></div>
+        <p><span class="swatch sw-left"></span><b>Azul:</b> tecla apertada pela mão esquerda.</p>
+        <p><span class="swatch sw-right"></span><b>Laranja:</b> tecla apertada pela mão direita.</p>
+        <p><span class="swatch sw-open"></span><b>Branca:</b> tecla solta (dedo levantado).</p>
+        <p class="muted">O polegar esquerdo fica atrás da flauta: “Pol.” é a tecla de Si e “Si♭” é a alavanca ao lado. O mindinho esquerdo usa a tecla de Sol♯. O mindinho direito usa as teclas de Mi♭, Dó♯ e Dó, no pé da flauta. Tr1 e Tr2 são as teclas de trinado, usadas em poucas notas agudas.</p>
+      </div>
+      <details class="card acc" open>
+        <summary>Postura</summary>
+        <p>Fique em pé ou sentado na ponta da cadeira, com as costas retas e os ombros soltos. A flauta vai para a direita, quase paralela ao chão, levemente inclinada para baixo.</p>
+        <p>Três pontos de apoio seguram a flauta: o queixo (no porta-lábio), a base do indicador esquerdo e o polegar direito, que fica embaixo do tubo, entre o indicador e o médio direitos.</p>
+        <p>Dedos curvados e relaxados, sempre perto das teclas, mesmo quando levantados.</p>
+      </details>
+      <details class="card acc">
+        <summary>Embocadura</summary>
+        <p>Apoie o porta-lábio no queixo, logo abaixo do lábio inferior. O lábio inferior cobre cerca de um quarto a um terço do furo do bocal.</p>
+        <p>Lábios relaxados, como se fosse dizer “pu” sem estufar as bochechas. Forme uma abertura pequena e oval no centro dos lábios.</p>
+        <p>Direcione o ar para a borda oposta do furo, não para dentro dele. Para começar, treine só com a cabeça da flauta: tape a ponta com a mão e procure um som limpo.</p>
+      </details>
+      <details class="card acc">
+        <summary>Respiração e apoio</summary>
+        <p>Inspire pela boca, enchendo a parte de baixo dos pulmões (a barriga expande, os ombros não sobem).</p>
+        <p>Solte o ar de forma constante, com o abdômen sustentando o fluxo. Pense em soprar um fio de ar longo, e não um jato forte.</p>
+        <p>Exercício: toque uma nota longa (Si ou Lá) contando quantos segundos o som se mantém estável. Tente aumentar um pouco a cada dia.</p>
+      </details>
+      <details class="card acc">
+        <summary>Mudar de oitava</summary>
+        <p>Muitas notas têm a mesma digitação em duas oitavas (Mi, Fá, Sol, Lá, Si…). O que muda é o sopro.</p>
+        <p><b>Oitava grave:</b> ar mais lento, abertura dos lábios um pouco maior, ar direcionado mais para baixo.</p>
+        <p><b>Oitava média e aguda:</b> ar mais rápido, abertura menor, lábio superior avançando levemente para direcionar o ar mais para a frente. Não sopre mais forte: sopre mais rápido.</p>
+      </details>
+      <details class="card acc">
+        <summary>Articulação (golpe de língua)</summary>
+        <p>Comece cada nota dizendo “tu” sem voz: a ponta da língua toca atrás dos dentes de cima e solta o ar.</p>
+        <p>Use “du” para um início mais suave. Evite começar as notas com a garganta (“ha”).</p>
+      </details>
+      <details class="card acc">
+        <summary>Cuidados com a flauta</summary>
+        <p>Monte e desmonte segurando pelas partes sem teclas, girando com cuidado. Não force o mecanismo.</p>
+        <p>Depois de tocar, passe a vareta com um pano de algodão por dentro de cada parte, para tirar a umidade. Limpe o exterior com pano macio.</p>
+        <p>Guarde sempre no estojo.</p>
+      </details>
+      <p class="credits muted">As digitações seguem o sistema Boehm padrão (flauta com pé em Dó). Notas agudas podem ter digitações alternativas: confirme com seu professor.</p>
+    </section>
+  </main>
+
+  <nav class="bottomnav" id="bottomnav">
+    <button class="nav-btn active" data-screen="afinar"><svg viewBox="0 0 24 24" class="ico"><path d="M9 2v8a3 3 0 0 0 6 0V2M12 13v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Afinar</button>
+    <button class="nav-btn" data-screen="notas"><svg viewBox="0 0 24 24" class="ico"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg>Notas</button>
+    <button class="nav-btn" data-screen="licoes"><svg viewBox="0 0 24 24" class="ico"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Lições</button>
+    <button class="nav-btn" data-screen="guia"><svg viewBox="0 0 24 24" class="ico"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6a3 3 0 0 0-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 4v14h-7" fill="none" stroke="currentColor" stroke-width="2"/></svg>Guia</button>
+  </nav>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
