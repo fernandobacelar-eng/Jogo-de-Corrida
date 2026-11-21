@@ -7,6 +7,9 @@ on:
       - '.github/workflows/flauta-apk.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   apk:
     runs-on: ubuntu-latest
@@ -29,3 +32,16 @@ jobs:
         with:
           name: flauta-guia-apk
           path: flauta-app/android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Renomeia o APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk flauta-guia.apk
+      - name: Publica o APK com link direto (release "flauta-latest")
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: flauta-latest
+          target_commitish: ${{ github.sha }}
+          name: Flauta Guia (versão mais recente)
+          body: |
+            Toque em **flauta-guia.apk** abaixo para baixar e instalar no Android.
+            Link direto: https://github.com/${{ github.repository }}/releases/download/flauta-latest/flauta-guia.apk
+          files: flauta-app/flauta-guia.apk
+          make_latest: true
