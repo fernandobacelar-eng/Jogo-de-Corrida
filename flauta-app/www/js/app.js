@@ -70,14 +70,16 @@ function centsBetween(freq, midi) {
 
 function setNeedle(el, cents, ok) {
   const c = Math.max(-50, Math.min(50, cents));
-  el.style.left = (50 + c) + '%';
+  if (el.dataset.gauge) el.style.transform = `rotate(${c * 1.8}deg)`;
+  else el.style.left = (50 + c) + '%';
   el.classList.toggle('ok', !!ok);
   el.classList.toggle('off', Math.abs(cents) > 50);
   el.classList.remove('idle');
 }
 
 function idleNeedle(el) {
-  el.style.left = '50%';
+  if (el.dataset.gauge) el.style.transform = 'rotate(0deg)';
+  else el.style.left = '50%';
   el.classList.add('idle');
   el.classList.remove('ok', 'off');
 }
@@ -169,6 +171,7 @@ function onTunerPitch(r) {
     if (!r) {
       idleNeedle(needle);
       $('tuner-note').textContent = '–';
+      $('tuner').classList.remove('in-tune');
       $('tuner-hz').textContent = '';
       $('tuner-msg').textContent = 'Toque uma nota longa e estável.';
       $('tuner-msg').className = 'tuner-msg';
@@ -182,6 +185,7 @@ function onTunerPitch(r) {
   $('tuner-hz').textContent = `${r.freq.toFixed(1)} Hz · ${cents >= 0 ? '+' : ''}${Math.round(cents)} cents`;
   const ok = Math.abs(cents) <= 5;
   setNeedle(needle, cents, ok);
+  $('tuner').classList.toggle('in-tune', ok && n.pc === 9);
   const msg = $('tuner-msg');
   let text, cls;
   if (ok) { text = 'Afinado! ✓'; cls = 'good'; }
@@ -451,6 +455,7 @@ function finishLesson() {
   const total = l.notes.length;
   const passed = ok / total >= 0.7;
   if (passed) {
+    celebrate();
     state.completed.add(l.id);
     store.set('completed', [...state.completed]);
   }
@@ -572,6 +577,40 @@ function clefSupported() {
   } catch { return true; }
 }
 if (!clefSupported()) document.body.classList.add('no-clef');
+
+// ---------- Mostrador do afinador ----------
+(function buildTicks() {
+  const g = document.querySelector('.gauge-ticks');
+  for (let c = -50; c <= 50; c += 10) {
+    const a = (c * 1.8 - 90) * Math.PI / 180;
+    const r1 = c % 50 === 0 || c === 0 ? 62 : 66;
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', 100 + r1 * Math.cos(a));
+    line.setAttribute('y1', 100 + r1 * Math.sin(a));
+    line.setAttribute('x2', 100 + 71 * Math.cos(a));
+    line.setAttribute('y2', 100 + 71 * Math.sin(a));
+    g.appendChild(line);
+  }
+})();
+
+// ---------- Celebração ----------
+function celebrate() {
+  const box = $('confetti');
+  const colors = ['#f5a524', '#ffd88a', '#3f7bff', '#9dbeff', '#34d399', '#ffffff'];
+  box.innerHTML = '';
+  for (let i = 0; i < 70; i++) {
+    const p = document.createElement('i');
+    p.style.left = Math.random() * 100 + '%';
+    p.style.background = colors[i % colors.length];
+    p.style.animationDelay = (Math.random() * 0.4) + 's';
+    p.style.animationDuration = (1.6 + Math.random() * 1.4) + 's';
+    p.style.setProperty('--x', (Math.random() * 160 - 80) + 'px');
+    p.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+    box.appendChild(p);
+  }
+  clearTimeout(celebrate._t);
+  celebrate._t = setTimeout(() => { box.innerHTML = ''; }, 3500);
+}
 
 // ---------- Início ----------
 $('calib-hz').textContent = state.a4;

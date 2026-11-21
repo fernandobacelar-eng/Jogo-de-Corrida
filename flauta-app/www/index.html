@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#14213d">
+  <meta name="theme-color" content="#0b1020">
   <title>Flauta Guia</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="topbar">
+    <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 17V5l9-2v12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="7.5" cy="17" r="2.6" fill="currentColor"/><circle cx="16.5" cy="15" r="2.6" fill="currentColor"/></svg></div>
     <h1>Flauta Guia</h1>
     <span class="topbar-sub" id="topbar-sub">Afinação</span>
   </header>
@@ -33,9 +34,25 @@
         <button class="btn btn-mic" id="btn-tuner">🎤 Ouvir minha flauta</button>
         <div class="tuner" id="tuner">
           <div class="tuner-note"><span id="tuner-note">–</span><small id="tuner-hz"></small></div>
-          <div class="meter">
-            <div class="meter-scale"><span>−50</span><span>−25</span><span>0</span><span>+25</span><span>+50</span></div>
-            <div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="tuner-needle"></div></div>
+          <div class="gauge">
+            <svg viewBox="0 0 200 118" aria-hidden="true">
+              <defs>
+                <linearGradient id="gauge-grad" x1="0" x2="1">
+                  <stop offset="0" stop-color="#f87171"/><stop offset=".38" stop-color="#fbbf24"/>
+                  <stop offset=".5" stop-color="#34d399"/><stop offset=".62" stop-color="#fbbf24"/><stop offset="1" stop-color="#f87171"/>
+                </linearGradient>
+              </defs>
+              <path d="M20 100 A80 80 0 0 1 180 100" class="gauge-track"/>
+              <path d="M20 100 A80 80 0 0 1 180 100" class="gauge-color" stroke="url(#gauge-grad)"/>
+              <g class="gauge-ticks"></g>
+              <text x="20" y="116" text-anchor="middle" class="gauge-lbl">−50</text>
+              <text x="100" y="12" text-anchor="middle" class="gauge-lbl">0</text>
+              <text x="180" y="116" text-anchor="middle" class="gauge-lbl">+50</text>
+              <g id="tuner-needle" class="gauge-needle idle" data-gauge="1">
+                <line x1="100" y1="100" x2="100" y2="30"/>
+              </g>
+              <circle cx="100" cy="100" r="7" class="gauge-hub"/>
+            </svg>
           </div>
           <div class="tuner-msg" id="tuner-msg">Toque uma nota longa e estável.</div>
         </div>
@@ -170,8 +187,8 @@
         <h2>Como ler a digitação</h2>
         <div class="flute" id="guia-flute"></div>
         <p><span class="swatch sw-left"></span><b>Azul:</b> tecla apertada pela mão esquerda.</p>
-        <p><span class="swatch sw-right"></span><b>Laranja:</b> tecla apertada pela mão direita.</p>
-        <p><span class="swatch sw-open"></span><b>Branca:</b> tecla solta (dedo levantado).</p>
+        <p><span class="swatch sw-right"></span><b>Dourado:</b> tecla apertada pela mão direita.</p>
+        <p><span class="swatch sw-open"></span><b>Prateada:</b> tecla solta (dedo levantado). O número dentro da tecla indica o dedo: 1 indicador, 2 médio, 3 anelar.</p>
         <p class="muted">O polegar esquerdo fica atrás da flauta: “Pol.” é a tecla de Si e “Si♭” é a alavanca ao lado. O mindinho esquerdo usa a tecla de Sol♯. O mindinho direito usa as teclas de Mi♭, Dó♯ e Dó, no pé da flauta. Tr1 e Tr2 são as teclas de trinado, usadas em poucas notas agudas.</p>
       </div>
       <details class="card acc" open>
@@ -222,6 +239,8 @@
   </nav>
 
   <div class="toast" id="toast" hidden></div>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
 
   <script type="module" src="js/app.js"></script>
 </body>
