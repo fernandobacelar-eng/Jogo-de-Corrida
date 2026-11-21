@@ -12,9 +12,12 @@
   --good-bg: #e7f6ec;
   --warn: #b45309;
   --bad: #b91c1c;
-  --tube-hi: #f7f8fa;
-  --tube-mid: #c9ced6;
-  --tube-lo: #8e96a3;
+  --left-hi: #8fb0ff;
+  --right-hi: #ffc48a;
+  --metal-lo: #7c8494;
+  --metal-mid: #b9c0cc;
+  --metal-hi: #e1e5eb;
+  --metal-shine: #ffffff;
   --key-open: #ffffff;
   --key-stroke: #6b7482;
   --radius: 16px;
@@ -35,9 +38,12 @@
     --good-bg: #133222;
     --warn: #fbbf24;
     --bad: #f87171;
-    --tube-hi: #d9dde4;
-    --tube-mid: #9aa1ad;
-    --tube-lo: #5e6672;
+    --left-hi: #a8c2ff;
+    --right-hi: #ffd08f;
+    --metal-lo: #5e6678;
+    --metal-mid: #a7afbe;
+    --metal-hi: #d7dce4;
+    --metal-shine: #ffffff;
     --key-open: #f2f4f7;
     --key-stroke: #3a4250;
     color-scheme: dark;
@@ -142,19 +148,34 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 12px 0; }
 .jp-dots { font-size: 9px; letter-spacing: 1px; min-height: 8px; }
 
 /* Flauta */
-.flute { margin: 8px -6px 0; }
+.flute { margin: 8px -8px 0; }
 .flute-svg { width: 100%; height: auto; display: block; }
-.tube-stroke { stroke: var(--tube-lo); stroke-width: 1; }
-.lip-plate { fill: var(--tube-mid); stroke: var(--tube-lo); }
-.hand-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; }
-.hl-left { fill: var(--left); }
-.hl-right { fill: var(--right); }
-.tiny-label { fill: var(--muted); font-size: 10px; }
-.key circle, .key ellipse { fill: var(--key-open); stroke: var(--key-stroke); stroke-width: 2; transition: fill .15s; }
-.key-label { fill: var(--muted); font-size: 10px; }
-.key.pressed.left circle, .key.pressed.left ellipse { fill: var(--left); stroke: var(--left); }
-.key.pressed.right circle, .key.pressed.right ellipse { fill: var(--right); stroke: var(--right); }
-.key.pressed .key-label { font-weight: 700; fill: var(--text); }
+.metal-edge { stroke: var(--metal-lo); stroke-width: 1; }
+.emb-hole { fill: #1b1f27; stroke: var(--metal-lo); }
+.rod { stroke: var(--metal-mid); stroke-width: 2.2; }
+.post { fill: var(--metal-hi); stroke: var(--metal-lo); stroke-width: 1; }
+.key { cursor: pointer; }
+.key .cap { stroke: var(--metal-lo); stroke-width: 1.2; transition: stroke .15s; }
+.key .cap-inner { fill: none; stroke: var(--metal-lo); stroke-opacity: .45; stroke-width: 1; }
+.key .halo { fill: none; opacity: 0; transition: opacity .2s; }
+.key .finger-num { font-size: 13px; font-weight: 800; fill: var(--metal-lo); opacity: .5; }
+.key.pressed .finger-num { fill: #fff; opacity: 1; }
+.key.pressed .cap-inner { stroke: #fff; stroke-opacity: .6; }
+.key.pressed.left .halo { fill: var(--left); opacity: .55; }
+.key.pressed.right .halo { fill: var(--right); opacity: .55; }
+.key.pressed .cap { stroke: #fff; stroke-width: 2; }
+.key.back .cap { stroke-dasharray: 3 2; }
+.key-label { font-size: 10.5px; fill: var(--muted); font-weight: 600; }
+.key-label.tiny { font-size: 9px; }
+.key.pressed .key-label { fill: var(--text); font-weight: 800; }
+.hand-label { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; }
+.bracket-line { stroke-width: 3; stroke-linecap: round; }
+.hand-bracket.left .hand-label { fill: var(--left); }
+.hand-bracket.left .bracket-line { stroke: var(--left); }
+.hand-bracket.right .hand-label { fill: var(--right); }
+.hand-bracket.right .bracket-line { stroke: var(--right); }
+.hand-bracket.dim { opacity: .35; }
+.tiny-label { fill: var(--muted); font-size: 9.5px; }
 
 .legend { display: flex; gap: 14px; justify-content: center; font-size: 12px; color: var(--muted); margin-top: 2px; flex-wrap: wrap; }
 .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }
