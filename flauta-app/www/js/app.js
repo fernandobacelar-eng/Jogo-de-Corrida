@@ -672,7 +672,7 @@ async function runIntro() {
     intro.classList.add('out');
     setTimeout(() => {
       intro.hidden = true;
-      if (!store.get('onboarded', false)) startOnboarding();
+      startOnboarding(); // a apresentação aparece sempre que o app abre
     }, 450);
   };
   intro.addEventListener('click', finish);
