@@ -63,8 +63,8 @@ kbd{font-family:var(--body);background:rgba(255,255,255,.14);border-radius:4px;p
 .tb{pointer-events:auto;width:68px;height:68px;border-radius:50%;border:0;background:rgba(16,22,36,.6);color:var(--paper);font-family:var(--display);font-size:22px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.3);touch-action:none}
 .tb.on{background:rgba(255,210,63,.8);color:#2a1d00}
 .tb.small{width:54px;height:54px;font-size:13px}
-@media (pointer:coarse){#help{display:none}#speedo{bottom:calc(96px + env(safe-area-inset-bottom,0px))}}
-@media (max-width:560px){#minimap{width:104px;height:104px}#mission{font-size:12px;width:min(52vw,380px)}#mission .t{font-size:19px}#money{font-size:18px}}
+@media (pointer:coarse){#help{display:none}}
+@media (max-width:560px){#minimap{width:104px;height:104px}#money{font-size:18px}#mission{top:calc(138px + env(safe-area-inset-top,0px));left:auto;right:calc(12px + env(safe-area-inset-right,0px));transform:none;width:min(56vw,230px);font-size:12px;padding:6px 10px}#mission .t{font-size:18px}#speedo{top:calc(100px + env(safe-area-inset-top,0px));left:calc(12px + env(safe-area-inset-left,0px));bottom:auto;transform:none;background:var(--panel);border-radius:10px;padding:6px 12px;box-shadow:0 3px 0 rgba(0,0,0,.35)}#speed{font-size:28px}}
 @media (prefers-reduced-motion:reduce){#stars span.on{animation:none}}
 </style>
 </head>
@@ -552,7 +552,7 @@ function updateTraffic(dt) {
   for (const c of traffic) {
     let [dx, dz] = trafficDir(c);
     let want = c.speed;
-    const ahead = (ox, oz) => { const rx = ox - c.x, rz = oz - c.z, al = rx * dx + rz * dz, la = Math.abs(-rx * dz + rz * dx); return al > 0 && al < 10 && la < 3.4; };
+    const ahead = (ox, oz) => { const rx = ox - c.x, rz = oz - c.z, al = rx * dx + rz * dz, la = Math.abs(-rx * dz + rz * dx); return al > 0 && al < 18 && la < 3.4; };
     if (ahead(P.x, P.z)) want = 0;
     for (const p of police) if (ahead(p.x, p.z)) want = 0;
     if (c.stun > 0) { c.stun -= dt; want = 0; }
