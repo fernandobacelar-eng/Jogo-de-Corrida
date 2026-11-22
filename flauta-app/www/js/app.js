@@ -679,23 +679,11 @@ async function runIntro() {
   setTimeout(finish, 2800);
 }
 
-let onbTimer = 0;
 function startOnboarding() {
   const onb = $('onb');
   onb.hidden = false;
   const slides = onb.querySelectorAll('.onb-slide');
   const dots = onb.querySelectorAll('#onb-dots i');
-  const flute = createFlute($('onb-flute'));
-  const demo = [67, 69, 71, 72, 74, 76, 65, 60];
-  let d = 0;
-  const showDemo = () => {
-    const n = noteInfo(demo[d % demo.length]);
-    flute.show(n.fingering);
-    $('onb-name').textContent = `${n.name}${n.octave}`;
-    d++;
-  };
-  showDemo();
-  onbTimer = setInterval(showDemo, 1300);
   let idx = 0;
   const go = (i) => {
     idx = Math.max(0, Math.min(slides.length - 1, i));
@@ -704,7 +692,6 @@ function startOnboarding() {
     $('onb-next').textContent = idx === slides.length - 1 ? 'Começar' : 'Próximo';
   };
   const end = () => {
-    clearInterval(onbTimer);
     store.set('onboarded', true);
     onb.classList.add('out');
     setTimeout(() => { onb.hidden = true; }, 400);
