@@ -7,7 +7,8 @@
 //   L1  indicador esquerdo   L2 médio esquerdo   L3 anelar esquerdo
 //   Gs  mindinho esquerdo na tecla de Sol♯ (número 7 na tabela)
 //   R1  indicador direito    R2 médio direito    R3 anelar direito
-//   Tr1 tecla de trinado de Ré    Tr2 tecla de trinado de Ré♯
+//   Tr1 tecla de trinado de Ré (entre indicador e médio direitos, apertada pelo médio)
+//   Tr2 tecla de trinado de Ré♯ (entre médio e anelar direitos, apertada pelo anelar)
 //   Eb  mindinho direito na tecla de Mi♭/Ré♯ (número 3 na tabela)
 //   Cs  mindinho direito na tecla de Dó♯ grave (número 2)
 //   C   mindinho direito na tecla de Dó grave (número 1)
@@ -22,7 +23,7 @@ export const KEY_INFO = {
   R1:  { hand: 'R', name: 'Indicador' },
   R2:  { hand: 'R', name: 'Médio' },
   R3:  { hand: 'R', name: 'Anelar' },
-  Tr1: { hand: 'R', name: 'Trinado de Ré' },
+  Tr1: { hand: 'R', name: 'Médio (tecla de trinado de Ré)' },
   Tr2: { hand: 'R', name: 'Anelar (tecla de trinado de Ré♯)' },
   Eb:  { hand: 'R', name: 'Mindinho (tecla de Mi♭)' },
   Cs:  { hand: 'R', name: 'Mindinho (tecla de Dó♯)' },
@@ -85,7 +86,7 @@ const TIPS = {
   75: 'Igual ao Ré♯ grave, com o indicador esquerdo levantado.',
   84: 'Mesma digitação do Dó médio, com sopro mais rápido.',
   85: 'Mesma digitação do Dó♯ médio, com sopro mais rápido.',
-  95: 'O anelar direito aperta a tecla de trinado de Ré♯ (a segunda tecla pequena, acima do corpo).',
+  95: 'O anelar direito aperta a tecla de trinado de Ré♯ (Tr2), a tecla pequena entre o médio e o anelar direitos.',
   96: 'O polegar sai da flauta. Sopro bem rápido e concentrado.',
 };
 

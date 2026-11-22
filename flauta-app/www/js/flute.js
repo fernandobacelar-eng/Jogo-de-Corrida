@@ -19,11 +19,13 @@ const KEYS = [
   { id: 'T', type: 'paddle', x: 170, y: 120, w: 30, h: 15, rot: 0, label: 'Polegar', back: true },
   { id: 'Gs', type: 'paddle', x: 270, y: 112, w: 28, h: 11, rot: -12, label: 'Sol♯' },
   // Trinados
-  { id: 'Tr1', type: 'cup', x: 284, r: 7, cyOff: -9, label: 'Tr1', small: true },
-  { id: 'Tr2', type: 'cup', x: 304, r: 7, cyOff: -9, label: 'Tr2', small: true },
   // Mão direita
   { id: 'R1', type: 'cup', x: 344, r: 15, finger: '1', label: 'Indicador', short: 'Ind.' },
+  // Teclas de trinado: Tr1 entre o indicador e o médio direitos (apertada pelo médio),
+  // Tr2 entre o médio e o anelar direitos (apertada pelo anelar).
+  { id: 'Tr1', type: 'cup', x: 367, r: 6.5, cyOff: -3, label: 'Tr1', small: true },
   { id: 'R2', type: 'cup', x: 390, r: 15, finger: '2', label: 'Médio', short: 'Méd.' },
+  { id: 'Tr2', type: 'cup', x: 413, r: 6.5, cyOff: -3, label: 'Tr2', small: true },
   { id: 'R3', type: 'cup', x: 436, r: 15, finger: '3', label: 'Anelar', short: 'Anel.' },
   { id: 'Eb', type: 'paddle', x: 470, y: 114, w: 26, h: 12, rot: -10, label: 'Mi♭' },
   // Pé (mindinho direito)
@@ -140,7 +142,7 @@ export function createFlute(container, { onKeyTap } = {}) {
         el('circle', { cx, cy, r: k.r - 4.5, class: 'cap-inner' }, g);
         el('text', { x: cx, y: cy + 5, 'text-anchor': 'middle', class: 'finger-num' }, g).textContent = k.finger;
       }
-      el('text', { x: cx, y: k.small ? cy - k.r - 5 : TUBE_Y - 11, 'text-anchor': 'middle', class: 'key-label' + (k.small ? ' tiny' : '') }, g).textContent = k.small ? k.label : k.short;
+      el('text', { x: cx, y: k.small ? TUBE_Y + TUBE_H + 12 : TUBE_Y - 11, 'text-anchor': 'middle', class: 'key-label' + (k.small ? ' tiny' : '') }, g).textContent = k.small ? k.label : k.short;
     } else {
       cx = k.x; cy = k.y;
       const t = `rotate(${k.rot} ${cx} ${cy})`;
