@@ -114,6 +114,8 @@ function showScreen(name) {
   state.screen = name;
   document.querySelectorAll('.screen').forEach((s) => s.classList.toggle('active', s.id === 'screen-' + name));
   document.querySelectorAll('.nav-btn').forEach((b) => b.classList.toggle('active', b.dataset.screen === name));
+  const activeBtn = document.querySelector(`.nav-btn[data-screen="${name}"]`);
+  if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   $('topbar-sub').textContent = SCREEN_TITLES[name];
   window.scrollTo(0, 0);
   if (name === 'licoes') renderLessonList();
