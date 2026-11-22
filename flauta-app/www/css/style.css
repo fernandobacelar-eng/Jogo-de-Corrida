@@ -483,6 +483,44 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
 .onb-dots i.on { width: 26px; background: var(--gold); }
 .onb-next { min-width: 150px; }
 
+/* ---------- Seletores da tela Notas ---------- */
+.pickers { display: flex; gap: 10px; margin-bottom: 12px; }
+.picker { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.picker-note { flex: 1.5; }
+.picker span { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); padding-left: 4px; }
+.picker select {
+  appearance: none; -webkit-appearance: none; width: 100%; min-height: 50px; padding: 0 38px 0 14px;
+  font: inherit; font-size: 17px; font-weight: 800; color: var(--text);
+  border-radius: 16px; border: 1px solid rgba(245, 165, 36, .45);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%23f5a524' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center / 20px,
+    linear-gradient(135deg, rgba(245, 165, 36, .14), rgba(23, 31, 56, .9));
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+}
+.picker select option { background: #161d34; color: #eef1f8; font-weight: 600; }
+.note-card.compact { padding: 14px 14px 16px; }
+.note-card.compact .staff { width: 70px; flex-basis: 70px; }
+.note-card.compact .note-name { font-size: 42px; }
+.note-card.compact .flute { margin-top: 6px; }
+.note-card.compact .fingers { margin-top: 8px; font-size: 14px; gap: 4px; }
+.note-card.compact .note-tip { margin-top: 8px; padding: 8px 12px; font-size: 13px; }
+.note-card.compact .row { margin-top: 10px; }
+.note-card.compact .row .btn { white-space: nowrap; min-height: 50px; }
+.note-card.compact .note-tip {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer;
+  line-height: 1.45; max-height: calc(2.9em + 16px);
+  padding: 8px 12px 0 !important; border-bottom: 8px solid transparent;
+}
+.note-card.compact .note-tip.open { display: block; -webkit-line-clamp: unset; max-height: none; }
+@media (max-height: 780px) {
+  .note-card.compact { padding: 12px 12px 14px; }
+  .note-card.compact .pickers { margin-bottom: 8px; }
+  .note-card.compact .picker select { min-height: 44px; font-size: 16px; }
+  .note-card.compact .staff { width: 56px; flex-basis: 56px; }
+  .note-card.compact .note-name { font-size: 34px; }
+  .note-card.compact .fingers { font-size: 13px; }
+  .note-card.compact .row .btn { min-height: 46px; }
+}
+
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

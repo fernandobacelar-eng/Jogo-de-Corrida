@@ -103,7 +103,21 @@
 
     <!-- ============ NOTAS ============ -->
     <section class="screen" id="screen-notas">
-      <div class="card note-card">
+      <div class="card note-card compact">
+        <div class="pickers">
+          <label class="picker">
+            <span>Oitava</span>
+            <select id="oct-select" aria-label="Escolher a oitava">
+              <option value="4">Grave</option>
+              <option value="5">Média</option>
+              <option value="6">Aguda</option>
+            </select>
+          </label>
+          <label class="picker picker-note">
+            <span>Nota</span>
+            <select id="note-select" aria-label="Escolher a nota"></select>
+          </label>
+        </div>
         <div class="note-head-row">
           <div class="staff" id="notas-staff"></div>
           <div class="note-title">
@@ -112,30 +126,16 @@
           </div>
         </div>
         <div class="flute" id="notas-flute"></div>
-        <div class="legend">
-          <span><i class="dot dot-left"></i>Mão esquerda</span>
-          <span><i class="dot dot-right"></i>Mão direita</span>
-          <span><i class="dot dot-open"></i>Aberta</span>
-        </div>
         <div class="fingers" id="notas-fingers"></div>
         <p class="note-tip" id="notas-tip"></p>
         <div class="row">
-          <button class="btn btn-primary" id="notas-play">🔊 Ouvir nota</button>
-          <button class="btn btn-mic" id="notas-listen">🎤 Detectar pelo som</button>
+          <button class="btn btn-primary" id="notas-play">🔊 Ouvir</button>
+          <button class="btn btn-mic" id="notas-listen">🎤 Detectar</button>
         </div>
         <div class="live" id="notas-live" hidden>
           <span id="notas-live-text">Toque uma nota…</span>
           <div class="meter small"><div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="notas-needle"></div></div></div>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="tabs" id="octave-tabs" role="tablist">
-          <button class="tab" data-oct="4" role="tab">Grave</button>
-          <button class="tab active" data-oct="5" role="tab">Média</button>
-          <button class="tab" data-oct="6" role="tab">Aguda</button>
-        </div>
-        <div class="note-grid" id="note-grid"></div>
       </div>
     </section>
 

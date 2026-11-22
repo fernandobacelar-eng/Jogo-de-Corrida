@@ -217,33 +217,41 @@ function selectNote(midi) {
   notasFlute.show(n.fingering);
   $('notas-fingers').innerHTML = fingersHTML(n.fingering);
   $('notas-tip').textContent = [n.tip, n.register.hint].filter(Boolean).join(' ');
+  $('notas-tip').classList.remove('open');
   const oct = midi >= 84 ? 6 : midi >= 72 ? 5 : 4;
   if (oct !== currentOctave) renderGrid(oct);
-  document.querySelectorAll('#note-grid button').forEach((b) => b.classList.toggle('active', +b.dataset.midi === midi));
+  $('note-select').value = String(midi);
 }
 
+// Preenche a lista de notas da oitava escolhida.
 function renderGrid(oct) {
   currentOctave = oct;
-  document.querySelectorAll('#octave-tabs .tab').forEach((t) => t.classList.toggle('active', +t.dataset.oct === oct));
-  const grid = $('note-grid');
-  grid.innerHTML = '';
+  $('oct-select').value = String(oct);
+  const sel = $('note-select');
+  sel.innerHTML = '';
   const start = (oct + 1) * 12;
   const end = oct === 6 ? MAX_MIDI : start + 11;
   for (let m = Math.max(start, MIN_MIDI); m <= end; m++) {
     const n = noteInfo(m);
-    const b = document.createElement('button');
-    b.className = 'note-btn' + (n.sharp ? ' sharp' : '') + (m === selected ? ' active' : '');
-    b.dataset.midi = m;
-    b.innerHTML = `<b>${n.name}</b><small>${n.letter}</small>`;
-    b.addEventListener('click', () => {
-      selectNote(m);
-      document.querySelector('#screen-notas .note-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-    grid.appendChild(b);
+    const o = document.createElement('option');
+    o.value = m;
+    o.textContent = `${n.name}${n.altName ? ' / ' + n.altName : ''}  (${n.letter})`;
+    sel.appendChild(o);
   }
+  sel.value = String(selected);
 }
 
-document.querySelectorAll('#octave-tabs .tab').forEach((t) => t.addEventListener('click', () => renderGrid(+t.dataset.oct)));
+$('oct-select').addEventListener('change', (e) => {
+  const oct = +e.target.value;
+  // mantém o mesmo nome de nota na nova oitava, se existir
+  const pc = selected % 12;
+  let m = (oct + 1) * 12 + pc;
+  if (m > MAX_MIDI) m = MAX_MIDI;
+  renderGrid(oct);
+  selectNote(m);
+});
+$('note-select').addEventListener('change', (e) => selectNote(+e.target.value));
+$('notas-tip').addEventListener('click', () => $('notas-tip').classList.toggle('open'));
 
 $('notas-play').addEventListener('click', () => {
   listener.mute(1800);
