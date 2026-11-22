@@ -674,6 +674,23 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
 .sk.right.on { background: var(--right); border-color: var(--right); color: var(--gold-ink); box-shadow: 0 0 12px rgba(245, 165, 36, .6); }
 .sk.on small { color: inherit; opacity: .8; }
 
+/* Crédito do autor */
+.credit, .intro-credit, .onb-credit {
+  font-family: "Noto Serif", "Droid Serif", Georgia, "Times New Roman", serif; font-style: italic; letter-spacing: .3px;
+}
+.credit b, .intro-credit b, .onb-credit b {
+  font-weight: 600; font-style: italic;
+  background: linear-gradient(90deg, var(--gold-hi), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.credit { display: flex; align-items: center; gap: 12px; justify-content: center; margin: 6px 4px 18px; color: var(--muted); font-size: 13px; }
+.credit-line { flex: 1; max-width: 64px; height: 1px; background: linear-gradient(90deg, transparent, rgba(245, 165, 36, .6)); }
+.credit-line:last-child { background: linear-gradient(90deg, rgba(245, 165, 36, .6), transparent); }
+.credit-text { white-space: nowrap; }
+.intro-credit { position: relative; z-index: 1; margin-top: 22px; font-size: 15px; color: #aab3cc; opacity: 0; }
+.intro.play .intro-credit { animation: riseIn .8s cubic-bezier(.2, .8, .3, 1) 1.45s forwards; }
+.onb-credit { text-align: center; font-size: 13px; color: #8e98b3; padding: 0 24px; }
+@media (max-height: 780px) { .credit { margin: 2px 4px 12px; font-size: 12px; } }
+
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
