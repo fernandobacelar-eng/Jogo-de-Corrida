@@ -67,7 +67,7 @@ const F = {
   91: ['L1', 'L2', 'L3', 'Eb'],
   92: ['L2', 'L3', 'Gs', 'Eb'],
   93: ['T', 'L2', 'R1', 'Eb'],
-  94: ['T', 'L1', 'R1', 'Eb'],
+  94: ['T', 'R1', 'Tr1', 'Eb'],
   95: ['T', 'L1', 'L3', 'Tr2', 'C'],
   96: ['L1', 'L2', 'L3', 'Gs', 'R1'],
 };
@@ -86,6 +86,7 @@ const TIPS = {
   75: 'Igual ao Ré♯ grave, com o indicador esquerdo levantado.',
   84: 'Mesma digitação do Dó médio, com sopro mais rápido.',
   85: 'Mesma digitação do Dó♯ médio, com sopro mais rápido.',
+  94: 'Polegar, indicador direito e a tecla de trinado de Ré (Tr1), apertada pelo médio direito. Nenhum dedo da mão esquerda além do polegar.',
   95: 'O anelar direito aperta a tecla de trinado de Ré♯ (Tr2), a tecla pequena entre o médio e o anelar direitos.',
   96: 'O polegar sai da flauta. Sopro bem rápido e concentrado.',
 };
@@ -154,6 +155,7 @@ export function describeFingering(keys) {
 export const ALT_FINGERINGS = [
   { midi: 70, keys: ['T', 'L1', 'R1', 'Eb'], label: 'digitação "1 e 1"' },
   { midi: 82, keys: ['T', 'L1', 'R1', 'Eb'], label: 'digitação "1 e 1"' },
+  { midi: 94, keys: ['T', 'L1', 'R1', 'Eb'], label: 'alternativa "1 e 1"' },
   { midi: 70, keys: ['Tb', 'L1', 'R1', 'Eb'], label: 'alavanca de Si♭ + "1 e 1"' },
   { midi: 62, keys: ['T', 'L1', 'L2', 'L3', 'R1', 'R2', 'R3', 'Eb'], label: 'com a tecla de Mi♭' },
   { midi: 60, keys: ['T', 'L1', 'L2', 'L3', 'R1', 'R2', 'R3', 'C'], label: 'só a tecla de Dó' },

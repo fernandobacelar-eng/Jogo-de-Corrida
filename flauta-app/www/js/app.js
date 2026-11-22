@@ -504,6 +504,17 @@ $('lesson-next').addEventListener('click', () => openLesson(lesson.index + 1));
 
 // ---------- Descobrir ----------
 const descKeys = new Set();
+function toggleDescKey(k) {
+  if (descKeys.has(k)) descKeys.delete(k);
+  else {
+    descKeys.add(k);
+    if (k === 'T') descKeys.delete('Tb');
+    if (k === 'Tb') descKeys.delete('T');
+  }
+  renderDescobrir();
+}
+document.querySelectorAll('#desc-small .sk').forEach((b) => b.addEventListener('click', () => toggleDescKey(b.dataset.k)));
+
 const descFlute = createFlute($('desc-flute'), {
   onKeyTap(k) {
     if (descKeys.has(k)) descKeys.delete(k);
@@ -527,6 +538,7 @@ function keyName(k) {
 function renderDescobrir() {
   const keys = [...descKeys];
   descFlute.show(keys);
+  document.querySelectorAll('#desc-small .sk').forEach((b) => b.classList.toggle('on', descKeys.has(b.dataset.k)));
   $('desc-fingers').innerHTML = keys.length ? fingersHTML(keys) : '';
   const box = $('desc-result');
   if (!keys.length) {

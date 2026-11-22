@@ -660,6 +660,20 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
 .news-row b { font-size: 17px; }
 .news-row small { color: var(--muted); font-size: 13px; }
 
+/* Descobrir: botões das teclas pequenas */
+.small-keys { margin-top: 10px; }
+.small-keys .kicker { margin-bottom: 6px; }
+.sk-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.sk-row::-webkit-scrollbar { display: none; }
+.sk {
+  flex: 0 0 auto; min-width: 62px; min-height: 52px; padding: 6px 8px; border-radius: 14px; font: inherit; font-weight: 800; font-size: 15px;
+  color: var(--text); background: rgba(255, 255, 255, .06); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; line-height: 1.1;
+}
+.sk small { font-size: 10px; font-weight: 600; color: var(--muted); margin-top: 3px; }
+.sk.left.on { background: var(--left); border-color: var(--left); color: #fff; box-shadow: 0 0 12px rgba(63, 123, 255, .6); }
+.sk.right.on { background: var(--right); border-color: var(--right); color: var(--gold-ink); box-shadow: 0 0 12px rgba(245, 165, 36, .6); }
+.sk.on small { color: inherit; opacity: .8; }
+
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

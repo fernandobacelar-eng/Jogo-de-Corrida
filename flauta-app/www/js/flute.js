@@ -23,9 +23,9 @@ const KEYS = [
   { id: 'R1', type: 'cup', x: 344, r: 15, finger: '1', label: 'Indicador', short: 'Ind.' },
   // Teclas de trinado: Tr1 entre o indicador e o médio direitos (apertada pelo médio),
   // Tr2 entre o médio e o anelar direitos (apertada pelo anelar).
-  { id: 'Tr1', type: 'cup', x: 367, r: 6.5, cyOff: -3, label: 'Tr1', small: true },
+  { id: 'Tr1', type: 'cup', x: 367, r: 7.5, cyOff: -3, label: 'Tr1', small: true },
   { id: 'R2', type: 'cup', x: 390, r: 15, finger: '2', label: 'Médio', short: 'Méd.' },
-  { id: 'Tr2', type: 'cup', x: 413, r: 6.5, cyOff: -3, label: 'Tr2', small: true },
+  { id: 'Tr2', type: 'cup', x: 413, r: 7.5, cyOff: -3, label: 'Tr2', small: true },
   { id: 'R3', type: 'cup', x: 436, r: 15, finger: '3', label: 'Anelar', short: 'Anel.' },
   { id: 'Eb', type: 'paddle', x: 470, y: 114, w: 26, h: 12, rot: -10, label: 'Mi♭' },
   // Pé (mindinho direito)
@@ -128,7 +128,8 @@ export function createFlute(container, { onKeyTap } = {}) {
 
   // ---------- teclas interativas ----------
   const nodes = {};
-  for (const k of KEYS) {
+  const drawOrder = [...KEYS].sort((a, b) => (a.small ? 1 : 0) - (b.small ? 1 : 0));
+  for (const k of drawOrder) {
     const hand = LEFT.has(k.id) ? 'left' : 'right';
     const g = el('g', { class: `key ${hand} ${k.type}${k.back ? ' back' : ''}${k.small ? ' small' : ''}`, 'data-key': k.id }, svg);
     const fillOpen = `url(#${id}cup)`;
@@ -155,7 +156,7 @@ export function createFlute(container, { onKeyTap } = {}) {
     }
     if (onKeyTap) {
       // área de toque maior que o desenho, para facilitar no celular
-      if (k.type === 'cup') el('circle', { cx, cy, r: k.r + (k.small ? 6 : 8), class: 'hit' }, g);
+      if (k.type === 'cup') el('circle', { cx, cy, r: k.small ? 13 : k.r + 8, class: 'hit' }, g);
       else el('rect', { x: cx - k.w / 2 - 8, y: cy - k.h / 2 - 7, width: k.w + 16, height: k.h + 14, rx: 8, class: 'hit', transform: `rotate(${k.rot} ${cx} ${cy})` }, g);
     }
     shape.dataset.open = fillOpen;
