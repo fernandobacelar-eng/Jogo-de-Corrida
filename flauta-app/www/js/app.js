@@ -660,12 +660,10 @@ document.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click'
 // ---------- Abertura e apresentação ----------
 async function runIntro() {
   const intro = $('intro');
-  try {
-    const svg = await (await fetch('img/logo-mark.svg')).text();
-    $('intro-logo').innerHTML = svg;
-  } catch {
-    $('intro-logo').innerHTML = '<img src="img/logo-mark.svg" alt="">';
-  }
+  await new Promise((ok) => {
+    const im = $('intro-logo').querySelector('img');
+    if (im.complete) ok(); else { im.onload = ok; im.onerror = ok; setTimeout(ok, 800); }
+  });
   intro.classList.add('play');
   let finished = false;
   const finish = () => {
