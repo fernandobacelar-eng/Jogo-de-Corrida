@@ -356,14 +356,15 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
   display: flex; align-items: center; gap: 12px; padding: 22px 18px; margin-bottom: 14px; border-radius: 26px;
   background:
     radial-gradient(120% 120% at 100% 0%, rgba(63, 123, 255, .45), transparent 60%),
-    radial-gradient(90% 90% at 0% 100%, rgba(245, 165, 36, .18), transparent 60%),
+    linear-gradient(90deg, rgba(14, 20, 42, .92) 0%, rgba(14, 20, 42, .7) 48%, rgba(14, 20, 42, .25) 100%),
+    url(../img/inicio-hero.webp) right center / cover no-repeat,
     linear-gradient(160deg, #1a2550, #121a36);
   border: 1px solid rgba(157, 190, 255, .18); box-shadow: var(--shadow);
 }
 .hero-text { flex: 1; min-width: 0; }
 .hero-title { margin: 4px 0 6px; font-size: 28px; line-height: 1.12; font-weight: 800; letter-spacing: -.6px; }
 .hero .muted { margin: 0; }
-.ring { position: relative; width: 104px; height: 104px; flex: 0 0 104px; }
+.ring { position: relative; width: 104px; height: 104px; flex: 0 0 104px; border-radius: 50%; background: radial-gradient(circle, rgba(10, 15, 31, .88) 58%, rgba(10, 15, 31, .5) 70%, transparent 74%); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
 .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
 .ring-bg { fill: none; stroke: rgba(255, 255, 255, .08); stroke-width: 10; }
 .ring-fg { fill: none; stroke: url(#none); stroke: var(--gold); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(.3, .8, .3, 1); filter: drop-shadow(0 0 6px rgba(245, 165, 36, .6)); }
@@ -639,36 +640,11 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
 .read-answer { text-align: center; }
 .read-name { font-size: 34px; font-weight: 800; color: var(--gold-hi); }
 
-/* Apresentação: demonstrações da versão 2 */
+/* Apresentação: etiqueta da versão 2 */
 .onb-new {
   display: inline-block; margin-bottom: 10px; padding: 4px 12px; border-radius: 99px; font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
   color: var(--gold-ink); background: linear-gradient(135deg, var(--gold-hi), var(--gold)); box-shadow: 0 0 18px rgba(245, 165, 36, .45);
 }
-.art-demo { height: 300px; gap: 16px; }
-.demo-card {
-  width: min(340px, 88vw); border-radius: 22px; padding: 10px; position: relative; overflow: hidden; box-sizing: border-box;
-  background: linear-gradient(160deg, rgba(42, 58, 114, .55), rgba(18, 26, 54, .85)); border: 1px solid rgba(157, 190, 255, .22);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, .45), 0 0 40px rgba(63, 123, 255, .2);
-  animation: floaty 4s ease-in-out infinite;
-}
-.demo-card .score-viewport { background: transparent; border: 0; width: 100%; }
-.demo-caption { font-size: 18px; color: #c3cbe0; display: flex; align-items: center; gap: 8px; }
-.demo-caption b { color: var(--gold-hi); font-size: 24px; }
-.demo-check { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--good); color: #052e1c; font-weight: 800; }
-.demo-read { display: grid; place-items: center; }
-.demo-read .score-svg.single { max-width: 280px; }
-.demo-reveal { opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; }
-.demo-reveal.show { opacity: 1; transform: none; }
-.demo-metro { width: 190px; height: auto; filter: drop-shadow(0 20px 40px rgba(63, 123, 255, .35)); }
-.dm-pend { transform-box: view-box; transform-origin: 100px 180px; animation: pend .75s ease-in-out infinite alternate; }
-@keyframes pend { from { transform: rotate(-28deg); } to { transform: rotate(28deg); } }
-.demo-beats { display: flex; gap: 14px; }
-.demo-beats i { width: 16px; height: 16px; border-radius: 50%; background: rgba(255, 255, 255, .14); animation: beatDot 3s linear infinite; }
-.demo-beats i:first-child { border: 2px solid var(--gold); }
-.demo-beats i:nth-child(2) { animation-delay: .75s; }
-.demo-beats i:nth-child(3) { animation-delay: 1.5s; }
-.demo-beats i:nth-child(4) { animation-delay: 2.25s; }
-@keyframes beatDot { 0%, 18% { background: var(--gold); transform: scale(1.35); box-shadow: 0 0 14px rgba(245, 165, 36, .8); } 25%, 100% { background: rgba(255, 255, 255, .14); transform: none; box-shadow: none; } }
 
 /* Apresentação: novidades */
 .art-news { gap: 14px; }
