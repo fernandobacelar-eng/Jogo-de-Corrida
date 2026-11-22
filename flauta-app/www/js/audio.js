@@ -65,6 +65,7 @@ export class PitchListener {
     this.running = false;
     this.mutedUntil = 0;
     this.onPitch = null; // callback({ freq, clarity, rms } | null)
+    this.onLevel = null; // callback(rms, tempo em ms) a cada quadro
     this._history = [];
     this._raf = 0;
   }
@@ -111,6 +112,7 @@ export class PitchListener {
     let sum = 0;
     for (let i = 0; i < this.buf.length; i++) sum += this.buf[i] * this.buf[i];
     const rms = Math.sqrt(sum / this.buf.length);
+    if (this.onLevel) this.onLevel(rms, performance.now());
 
     let result = null;
     if (performance.now() >= this.mutedUntil && rms > 0.01) {
@@ -148,9 +150,10 @@ function fluteWave(ac) {
 }
 
 // Toca uma nota. Retorna função para parar (útil para som contínuo).
-export function playTone(freq, { duration = 1.5, pure = false, volume = 0.25 } = {}) {
+export function playTone(freq, { duration = 1.5, pure = false, volume = 0.25, when = 0, dest = null } = {}) {
   const ac = audioContext();
-  const now = ac.currentTime;
+  const out = dest || ac.destination;
+  const now = Math.max(ac.currentTime, when);
   const osc = ac.createOscillator();
   if (pure) osc.type = 'sine';
   else osc.setPeriodicWave(fluteWave(ac));
@@ -159,7 +162,7 @@ export function playTone(freq, { duration = 1.5, pure = false, volume = 0.25 } =
   const gain = ac.createGain();
   gain.gain.setValueAtTime(0, now);
   gain.gain.linearRampToValueAtTime(volume, now + 0.08);
-  osc.connect(gain).connect(ac.destination);
+  osc.connect(gain).connect(out);
 
   // Leve ruído de sopro no ataque (só no timbre de flauta)
   if (!pure) {
@@ -175,7 +178,7 @@ export function playTone(freq, { duration = 1.5, pure = false, volume = 0.25 } =
     bp.Q.value = 1.5;
     const ng = ac.createGain();
     ng.gain.value = volume * 0.25;
-    noise.connect(bp).connect(ng).connect(ac.destination);
+    noise.connect(bp).connect(ng).connect(out);
     noise.start(now);
   }
 
@@ -197,4 +200,20 @@ export function playTone(freq, { duration = 1.5, pure = false, volume = 0.25 } =
     stopped = true;
   }
   return stop;
+}
+
+// Clique do metrônomo (acento no primeiro tempo do compasso).
+export function click(when, accent = false) {
+  const ac = audioContext();
+  const t = Math.max(ac.currentTime, when);
+  const osc = ac.createOscillator();
+  osc.type = 'triangle';
+  osc.frequency.value = accent ? 1760 : 1100;
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(accent ? 0.5 : 0.32, t + 0.002);
+  g.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+  osc.connect(g).connect(ac.destination);
+  osc.start(t);
+  osc.stop(t + 0.08);
 }

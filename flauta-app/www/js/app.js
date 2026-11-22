@@ -2,6 +2,7 @@ import { noteInfo, fullName, midiToFreq, freqToMidiFloat, describeFingering, fin
 import { PitchListener, playTone, audioContext } from './audio.js';
 import { createFlute, renderStaff } from './flute.js';
 import { LESSONS } from './lessons.js';
+import { initV2 } from './v2.js';
 
 // ---------- Armazenamento ----------
 const store = {
@@ -26,6 +27,7 @@ const state = {
 
 const $ = (id) => document.getElementById(id);
 const listener = new PitchListener();
+let v2 = null; // módulo da versão 2 (músicas, ritmo, leitura)
 let wakeLock = null;
 
 function toast(msg, ms = 3500) {
@@ -61,6 +63,7 @@ async function startMic(handler) {
 function stopMic() {
   listener.stop();
   listener.onPitch = null;
+  listener.onLevel = null;
   keepAwake(false);
 }
 
@@ -103,7 +106,7 @@ function fingersHTML(keys) {
 }
 
 // ---------- Navegação ----------
-const SCREEN_TITLES = { inicio: 'Início', afinar: 'Afinação', notas: 'Digitações', licoes: 'Lições', descobrir: 'Descobrir a nota', guia: 'Guia' };
+const SCREEN_TITLES = { inicio: 'Início', musicas: 'Músicas', metro: 'Ritmo', leitura: 'Leitura', afinar: 'Afinação', notas: 'Digitações', licoes: 'Lições', descobrir: 'Descobrir a nota', guia: 'Guia' };
 
 function showScreen(name) {
   if (state.screen === name) return;
@@ -115,6 +118,7 @@ function showScreen(name) {
   window.scrollTo(0, 0);
   if (name === 'licoes') renderLessonList();
   if (name === 'inicio') renderHome();
+  if (v2) v2.enter(name);
 }
 
 function leaveScreen(name) {
@@ -124,6 +128,7 @@ function leaveScreen(name) {
   setMicButton($('notas-listen'), false);
   $('notas-live').hidden = true;
   if (name === 'licoes') closeLesson();
+  if (v2) v2.leave(name);
 }
 
 function setMicButton(btn, on, onText = '⏹ Parar de ouvir', offText) {
@@ -715,6 +720,9 @@ function startOnboarding() {
     x0 = null;
   });
 }
+
+// ---------- Versão 2 ----------
+v2 = initV2({ $, listener, startMic, stopMic, store, state, setNeedle, idleNeedle, createFlute, fingersHTML, celebrate, toast });
 
 // ---------- Início ----------
 renderHome();

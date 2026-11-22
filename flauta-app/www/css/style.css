@@ -526,6 +526,129 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
   .note-card.compact .row .btn { min-height: 46px; }
 }
 
+/* ================= Versão 2 ================= */
+.v2 {
+  display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 8px; vertical-align: 3px;
+  font-size: 13px; font-weight: 800; color: var(--gold-ink); background: linear-gradient(135deg, var(--gold-hi), var(--gold));
+}
+.intro-word .v2 { min-width: 34px; height: 34px; font-size: 22px; border-radius: 11px; vertical-align: 6px; }
+.tile { position: relative; }
+.badge-new {
+  position: absolute; top: 12px; right: 12px; font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  padding: 2px 8px; border-radius: 99px; color: var(--gold-ink); background: var(--gold); box-shadow: 0 0 12px rgba(245, 165, 36, .5);
+}
+.tiles { grid-template-columns: 1fr 1fr; }
+
+/* Seletor segmentado */
+.seg { display: flex; background: rgba(0, 0, 0, .28); border: 1px solid var(--border); border-radius: 14px; padding: 4px; margin: 10px 0; }
+.seg button { flex: 1; border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 700; font-size: 14px; padding: 9px 6px; border-radius: 10px; min-height: 40px; }
+.seg button.on { background: linear-gradient(135deg, var(--gold-hi), var(--gold)); color: var(--gold-ink); }
+.btn-mini { width: 36px; height: 36px; min-height: 0; padding: 0; border-radius: 12px; font-size: 20px; }
+
+/* Partitura em faixa */
+.score-wrap { position: relative; }
+.score-viewport {
+  position: relative; overflow: hidden; border-radius: 18px; height: 150px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02)); border: 1px solid var(--border);
+}
+.score-track { position: absolute; left: 0; top: 0; will-change: transform; }
+.score-svg { display: block; }
+.score-cursor { position: absolute; top: 10px; bottom: 10px; left: min(140px, 35%); width: 2px; margin-left: -1px; background: linear-gradient(180deg, transparent, var(--gold), transparent); opacity: .7; pointer-events: none; }
+.sc-line { stroke: var(--text); stroke-width: 1; opacity: .45; }
+.sc-ledger { stroke: var(--text); stroke-width: 1.2; opacity: .6; }
+.sc-bar { stroke: var(--text); stroke-width: 1.2; opacity: .5; }
+.sc-bar.end { stroke-width: 4; opacity: .7; }
+.sc-clef { fill: var(--text); opacity: .85; font-size: 54px; font-family: "Noto Music", "Segoe UI Symbol", "Apple Symbols", serif; }
+.no-clef .sc-clef { display: none; }
+.sc-head { fill: var(--text); stroke: var(--text); stroke-width: 1.2; }
+.sc-head.hollow { fill: none; stroke-width: 2.2; }
+.sc-stem { stroke: var(--text); stroke-width: 1.6; }
+.sc-flag, .sc-dot, .sc-acc, .sc-rest { fill: var(--text); }
+.sc-acc { font-size: 18px; }
+.sc-label { fill: var(--muted); font-size: 11px; font-weight: 700; }
+.sc-note.cur .sc-head, .sc-note.cur .sc-stem { fill: var(--gold); stroke: var(--gold); }
+.sc-note.cur .sc-head.hollow { fill: none; }
+.sc-note.cur .sc-flag, .sc-note.cur .sc-dot, .sc-note.cur .sc-acc { fill: var(--gold); }
+.sc-note.cur .sc-label { fill: var(--gold-hi); }
+.sc-note.cur { filter: drop-shadow(0 0 6px rgba(245, 165, 36, .8)); }
+.sc-note.ok .sc-head, .sc-note.ok .sc-stem { fill: var(--good); stroke: var(--good); }
+.sc-note.ok .sc-head.hollow { fill: none; }
+.sc-note.ok .sc-flag, .sc-note.ok .sc-dot, .sc-note.ok .sc-acc { fill: var(--good); }
+.sc-note.miss .sc-head, .sc-note.miss .sc-stem { fill: var(--bad); stroke: var(--bad); }
+.sc-note.miss .sc-head.hollow { fill: none; }
+.sc-note.miss .sc-flag, .sc-note.miss .sc-dot { fill: var(--bad); }
+.count-big {
+  position: absolute; inset: 0; display: grid; place-items: center; font-size: 74px; font-weight: 800; color: var(--gold);
+  text-shadow: 0 0 30px rgba(245, 165, 36, .7); background: rgba(11, 16, 32, .55); border-radius: 18px; pointer-events: none;
+}
+
+/* Músicas */
+.song-ico { font-size: 22px; }
+.song-item { width: 100%; text-align: left; font: inherit; color: var(--text); appearance: none; -webkit-appearance: none; }
+#metro-tap { white-space: nowrap; }
+.song-card { padding: 12px 14px 16px; }
+.song-top { display: flex; align-items: center; justify-content: space-between; }
+.song-top .btn-back { margin: 0; }
+.song-tempo { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
+.song-tempo b { color: var(--gold); font-size: 18px; }
+#song-title { font-size: 20px; margin: 2px 0 0; }
+.switch-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin: 8px 2px 0; }
+.switch-row input { width: 18px; height: 18px; accent-color: var(--gold); }
+.song-now { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+.song-now-l { min-width: 92px; }
+.song-note { font-size: 34px; font-weight: 800; line-height: 1; color: var(--gold-hi); }
+.song-fb { flex: 1; font-size: 14px; font-weight: 700; color: var(--muted); }
+.song-fb.good { color: var(--good); }
+.song-fb.warn { color: var(--warn); }
+.song-card .flute { margin-top: 4px; }
+
+/* Metrônomo */
+.metro-bpm { display: flex; align-items: center; justify-content: center; gap: 22px; margin: 6px 0 4px; }
+.metro-val { text-align: center; min-width: 120px; }
+.metro-val b { display: block; font-size: 64px; line-height: 1; font-weight: 800; color: var(--gold); text-shadow: 0 0 24px rgba(245, 165, 36, .35); }
+.metro-val small { color: var(--muted); font-size: 13px; }
+.slider { width: 100%; margin: 12px 0 4px; accent-color: var(--gold); height: 28px; }
+.metro-dots { display: flex; justify-content: center; gap: 14px; margin: 12px 0 4px; min-height: 22px; }
+.metro-dots i { width: 18px; height: 18px; border-radius: 50%; background: rgba(255, 255, 255, .12); transition: transform .08s, background .08s; }
+.metro-dots i.acc { border: 2px solid var(--gold); }
+.metro-dots i.on { background: var(--gold); transform: scale(1.35); box-shadow: 0 0 16px rgba(245, 165, 36, .8); }
+.metro-dots i.on:not(.acc) { background: var(--left-hi); box-shadow: 0 0 14px rgba(157, 190, 255, .8); }
+.rh-fb { margin-top: 12px; font-weight: 700; }
+.rh-result { text-align: center; }
+.rh-score-big { font-size: 56px; font-weight: 800; color: var(--gold); margin-top: 6px; }
+
+/* Leitura */
+.read-card { padding-bottom: 16px; }
+.read-top { display: flex; align-items: flex-end; gap: 12px; }
+.read-score { text-align: center; min-width: 70px; }
+.read-score b { display: block; font-size: 36px; line-height: 1; font-weight: 800; color: var(--gold); }
+.read-score small { color: var(--muted); font-size: 12px; }
+.read-dots { display: flex; gap: 6px; justify-content: center; margin: 14px 0 6px; }
+.read-dots i { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, .12); }
+.read-dots i.cur { background: transparent; border: 2px solid var(--gold); }
+.read-dots i.ok { background: var(--good); }
+.read-dots i.miss { background: var(--bad); }
+.read-staff {
+  display: grid; place-items: center; padding: 6px; border-radius: 20px; margin-top: 4px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02)); border: 1px solid var(--border);
+}
+.score-svg.single { width: 100%; max-width: 300px; height: auto; }
+.read-q { text-align: center; font-weight: 700; margin: 12px 0 4px; min-height: 44px; }
+.read-q.good { color: var(--good); }
+.read-q.warn { color: var(--warn); }
+.read-answer { text-align: center; }
+.read-name { font-size: 34px; font-weight: 800; color: var(--gold-hi); }
+
+/* Apresentação: novidades */
+.art-news { gap: 14px; }
+.news-row {
+  display: grid; grid-template-columns: 46px 1fr; grid-template-rows: auto auto; column-gap: 14px; align-items: center; text-align: left;
+  width: 100%; padding: 12px 14px; border-radius: 18px; background: rgba(23, 31, 56, .7); border: 1px solid var(--border);
+}
+.news-row .tile-ico { grid-row: span 2; }
+.news-row b { font-size: 17px; }
+.news-row small { color: var(--muted); font-size: 13px; }
+
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

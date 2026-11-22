@@ -1,4 +1,4 @@
-name: Gerar APK da Flauta Guia
+name: Gerar APK da Flauta Guia 2
 
 on:
   push:
@@ -33,18 +33,18 @@ jobs:
           ./gradlew assembleDebug --no-daemon || (sleep 45 && ./gradlew assembleDebug --no-daemon --refresh-dependencies)
       - uses: actions/upload-artifact@v4
         with:
-          name: flauta-guia-apk
+          name: flauta-guia-2-apk
           path: flauta-app/android/app/build/outputs/apk/debug/app-debug.apk
       - name: Renomeia o APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk flauta-guia.apk
-      - name: Publica o APK com link direto (release "flauta-latest")
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk flauta-guia-2.apk
+      - name: Publica o APK com link direto (release "flauta-guia-2")
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: flauta-latest
+          tag_name: flauta-guia-2
           target_commitish: ${{ github.sha }}
-          name: Flauta Guia (versão mais recente)
+          name: Flauta Guia 2
           body: |
-            Toque em **flauta-guia.apk** abaixo para baixar e instalar no Android.
-            Link direto: https://github.com/${{ github.repository }}/releases/download/flauta-latest/flauta-guia.apk
-          files: flauta-app/flauta-guia.apk
-          make_latest: true
+            Toque em **flauta-guia-2.apk** abaixo para baixar e instalar no Android.
+            Link direto: https://github.com/${{ github.repository }}/releases/download/flauta-guia-2/flauta-guia-2.apk
+          files: flauta-app/flauta-guia-2.apk
+          make_latest: false

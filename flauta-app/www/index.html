@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0b1020">
-  <title>Flauta Guia</title>
+  <title>Flauta Guia 2</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="topbar">
     <img class="logo" src="img/logo.jpg" alt="" aria-hidden="true">
-    <h1>Flauta <span class="gold">Guia</span></h1>
+    <h1>Flauta <span class="gold">Guia</span> <span class="v2">2</span></h1>
     <span class="topbar-sub" id="topbar-sub">Início</span>
   </header>
 
@@ -39,9 +39,11 @@
         <span class="tile-go">›</span>
       </button>
       <div class="tiles">
-        <button class="tile" data-go="notas"><span class="tile-ico ti-gold"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg></span><b>Digitações</b><small>37 notas</small></button>
+        <button class="tile tile-new" data-go="musicas"><span class="tile-ico ti-gold"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg></span><b>Músicas</b><small>Toque com a partitura</small><em class="badge-new">NOVO</em></button>
+        <button class="tile tile-new" data-go="leitura"><span class="tile-ico ti-blue"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 10h18M3 14h18M3 18h18" stroke="currentColor" stroke-width="1.6"/><ellipse cx="14" cy="14" rx="3" ry="2.2" fill="currentColor" transform="rotate(-20 14 14)"/></svg></span><b>Leitura</b><small>Leia e toque a nota</small><em class="badge-new">NOVO</em></button>
+        <button class="tile tile-new" data-go="metro"><span class="tile-ico ti-green"><svg viewBox="0 0 24 24"><path d="M9 3h6l4 18H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 15l5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 17h10" stroke="currentColor" stroke-width="2"/></svg></span><b>Ritmo</b><small>Metrônomo e exercícios</small><em class="badge-new">NOVO</em></button>
         <button class="tile" data-go="descobrir"><span class="tile-ico ti-violet"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><b>Descobrir</b><small>Que nota é esta?</small></button>
-        <button class="tile" data-go="licoes"><span class="tile-ico ti-green"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><b>Lições</b><small>Passo a passo</small></button>
+        <button class="tile" data-go="licoes"><span class="tile-ico ti-blue"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><b>Lições</b><small>Passo a passo</small></button>
         <button class="tile" data-go="guia"><span class="tile-ico ti-rose"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6a3 3 0 0 0-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 4v14h-7" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><b>Guia</b><small>Postura e sopro</small></button>
       </div>
       <div class="card tip-day">
@@ -216,6 +218,111 @@
       <div class="card" id="desc-result"></div>
     </section>
 
+    <!-- ============ MÚSICAS ============ -->
+    <section class="screen" id="screen-musicas">
+      <div id="songs-list-view">
+        <div class="card">
+          <h2>Músicas</h2>
+          <p class="muted">Toque junto com a partitura. O app escuta e confere nota por nota.</p>
+        </div>
+        <div id="songs-list"></div>
+      </div>
+      <div id="song-view" hidden>
+        <div class="card song-card" id="song-card">
+          <div class="song-top">
+            <button class="btn btn-ghost btn-back" id="song-back">← Músicas</button>
+            <div class="song-tempo"><button class="btn btn-mini" id="song-slower" aria-label="Mais devagar">−</button><span><b id="song-bpm">84</b> bpm</span><button class="btn btn-mini" id="song-faster" aria-label="Mais rápido">+</button></div>
+          </div>
+          <h2 id="song-title"></h2>
+          <div class="seg" id="song-mode"><button data-mode="wait" class="on">Esperar por mim</button><button data-mode="rhythm">Com ritmo</button></div>
+          <div class="score-wrap">
+            <div id="song-score"></div>
+            <div class="count-big" id="song-count" hidden></div>
+          </div>
+          <label class="switch-row"><input type="checkbox" id="song-names" checked> Mostrar o nome das notas</label>
+          <div class="song-now">
+            <div class="song-now-l"><div class="kicker">Agora</div><div class="song-note" id="song-note">–</div></div>
+            <div class="song-fb" id="song-fb"></div>
+          </div>
+          <div class="flute" id="song-flute"></div>
+          <div class="meter small"><div class="meter-track"><div class="meter-ok" id="song-ok-zone"></div><div class="meter-needle" id="song-needle"></div></div></div>
+          <div class="row">
+            <button class="btn" id="song-listen">▶ Ouvir</button>
+            <button class="btn btn-primary" id="song-play">🎤 Tocar</button>
+          </div>
+        </div>
+        <div class="card done" id="song-done" hidden>
+          <div class="done-icon">♪</div>
+          <h2 id="song-done-title"></h2>
+          <p id="song-done-text"></p>
+          <div class="row">
+            <button class="btn" id="song-again">Tocar de novo</button>
+            <button class="btn btn-primary" id="song-done-back">Outras músicas</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ METRÔNOMO E RITMO ============ -->
+    <section class="screen" id="screen-metro">
+      <div id="metro-main">
+        <div class="card metro-card">
+          <h2>Metrônomo</h2>
+          <div class="metro-bpm">
+            <button class="btn btn-round" id="metro-minus" aria-label="Diminuir andamento">−</button>
+            <div class="metro-val"><b id="metro-bpm">80</b><small><span id="metro-name">Andante</span> · bpm</small></div>
+            <button class="btn btn-round" id="metro-plus" aria-label="Aumentar andamento">+</button>
+          </div>
+          <input type="range" class="slider" id="metro-slider" min="40" max="208" value="80" aria-label="Andamento">
+          <div class="metro-dots" id="metro-dots"></div>
+          <div class="seg" id="metro-sig"><button data-b="2">2/4</button><button data-b="3">3/4</button><button data-b="4" class="on">4/4</button><button data-b="6">6/8</button></div>
+          <div class="row">
+            <button class="btn" id="metro-tap" title="Toque várias vezes no andamento desejado">👆 Marcar</button>
+            <button class="btn btn-primary" id="metro-start">▶ Iniciar</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Exercícios de ritmo</h2>
+          <p class="muted">O app ouve quando cada nota começa e mostra se você entrou no tempo. O andamento é o do metrônomo acima.</p>
+          <div id="rhythm-list"></div>
+        </div>
+      </div>
+      <div class="card" id="rhythm-view" hidden>
+        <button class="btn btn-ghost btn-back" id="rh-back">← Ritmo</button>
+        <h2 id="rh-title"></h2>
+        <p class="muted" id="rh-desc"></p>
+        <div class="score-wrap">
+          <div id="rh-score"></div>
+          <div class="count-big" id="rh-count" hidden></div>
+        </div>
+        <div class="rh-fb" id="rh-fb"></div>
+        <div class="rh-result" id="rh-result"></div>
+        <div class="row"><button class="btn btn-primary" id="rh-start">▶ Começar</button></div>
+      </div>
+    </section>
+
+    <!-- ============ LEITURA ============ -->
+    <section class="screen" id="screen-leitura">
+      <div class="card read-card">
+        <div class="read-top">
+          <label class="picker"><span>Notas do treino</span><select id="read-range" aria-label="Notas do treino"></select></label>
+          <div class="read-score"><b id="read-points">0</b><small>de 10</small></div>
+        </div>
+        <div class="read-dots" id="read-dots"></div>
+        <div class="read-staff" id="read-staff"></div>
+        <div class="read-q" id="read-q"></div>
+        <div class="read-answer" id="read-answer" hidden>
+          <div class="read-name" id="read-name"></div>
+          <div class="flute" id="read-flute"></div>
+        </div>
+        <div class="meter small"><div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="read-needle"></div></div></div>
+        <div class="row">
+          <button class="btn" id="read-reveal">💡 Mostrar resposta</button>
+          <button class="btn btn-primary" id="read-start">🎤 Começar</button>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ EMBOCADURA ============ -->
     <section class="screen" id="screen-guia">
       <div class="card">
@@ -269,8 +376,8 @@
     <button class="nav-btn active" data-screen="inicio"><svg viewBox="0 0 24 24" class="ico"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Início</button>
     <button class="nav-btn" data-screen="afinar"><svg viewBox="0 0 24 24" class="ico"><path d="M9 2v8a3 3 0 0 0 6 0V2M12 13v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Afinar</button>
     <button class="nav-btn" data-screen="notas"><svg viewBox="0 0 24 24" class="ico"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg>Notas</button>
+    <button class="nav-btn" data-screen="musicas"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg>Músicas</button>
     <button class="nav-btn" data-screen="licoes"><svg viewBox="0 0 24 24" class="ico"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Lições</button>
-    <button class="nav-btn" data-screen="descobrir"><svg viewBox="0 0 24 24" class="ico"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Descobrir</button>
   </nav>
 
   <!-- Abertura animada -->
@@ -279,7 +386,7 @@
     <div class="intro-glow"></div>
     <div class="intro-rings"><i></i><i></i><i></i></div>
     <div class="intro-logo" id="intro-logo"><img src="img/logo.jpg" alt=""><span class="shine"></span></div>
-    <div class="intro-word"><span>Flauta</span> <span class="gold">Guia</span></div>
+    <div class="intro-word"><span>Flauta</span> <span class="gold">Guia</span> <span class="v2">2</span></div>
     <div class="intro-tag">Aprenda flauta transversal</div>
     <div class="intro-bar"><i></i></div>
   </div>
@@ -303,9 +410,18 @@
         <h2>O app escuta você</h2>
         <p>Toque a nota e ele confere na hora. As lições só avançam quando a nota está certa.</p>
       </div>
+      <div class="onb-slide">
+        <div class="onb-art art-news">
+          <div class="news-row"><span class="tile-ico ti-gold"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg></span><b>Músicas</b><small>a partitura corre e o app confere</small></div>
+          <div class="news-row"><span class="tile-ico ti-green"><svg viewBox="0 0 24 24"><path d="M9 3h6l4 18H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 15l5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 17h10" stroke="currentColor" stroke-width="2"/></svg></span><b>Ritmo</b><small>metrônomo e exercícios no tempo</small></div>
+          <div class="news-row"><span class="tile-ico ti-blue"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 10h18M3 14h18M3 18h18" stroke="currentColor" stroke-width="1.6"/><ellipse cx="14" cy="14" rx="3" ry="2.2" fill="currentColor" transform="rotate(-20 14 14)"/></svg></span><b>Leitura</b><small>veja a nota na pauta e toque</small></div>
+        </div>
+        <h2>Novidades da versão 2</h2>
+        <p>Toque músicas de verdade, treine o ritmo com o metrônomo e aprenda a ler partitura.</p>
+      </div>
     </div>
     <div class="onb-foot">
-      <div class="onb-dots" id="onb-dots"><i class="on"></i><i></i><i></i></div>
+      <div class="onb-dots" id="onb-dots"><i class="on"></i><i></i><i></i><i></i></div>
       <button class="btn btn-primary onb-next" id="onb-next">Próximo</button>
     </div>
   </div>
