@@ -3,6 +3,8 @@ import { PitchListener, playTone, audioContext } from './audio.js';
 import { createFlute, renderStaff } from './flute.js';
 import { LESSONS } from './lessons.js';
 import { initV2 } from './v2.js';
+import { createScoreStrip, renderSingleNote } from './score.js';
+import { SONGS } from './songs.js';
 
 // ---------- Armazenamento ----------
 const store = {
@@ -697,6 +699,7 @@ function startOnboarding() {
   onb.hidden = false;
   const slides = onb.querySelectorAll('.onb-slide');
   const dots = onb.querySelectorAll('#onb-dots i');
+  const stopDemos = startOnbDemos();
   let idx = 0;
   const go = (i) => {
     idx = Math.max(0, Math.min(slides.length - 1, i));
@@ -705,6 +708,7 @@ function startOnboarding() {
     $('onb-next').textContent = idx === slides.length - 1 ? 'Começar' : 'Próximo';
   };
   const end = () => {
+    stopDemos();
     store.set('onboarded', true);
     onb.classList.add('out');
     setTimeout(() => { onb.hidden = true; }, 400);
@@ -719,6 +723,45 @@ function startOnboarding() {
     if (Math.abs(dx) > 50) go(idx + (dx < 0 ? 1 : -1));
     x0 = null;
   });
+}
+
+// Demonstrações animadas das telas novas da apresentação (até chegarem as ilustrações).
+function startOnbDemos() {
+  const timers = [];
+  // Música: a partitura corre e as notas ficam verdes
+  if ($('demo-score')) {
+    const demoSong = { ...SONGS[0], notes: SONGS[0].notes.slice(0, 14) };
+    const strip = createScoreStrip($('demo-score'), demoSong, { labels: true });
+    let i = 0;
+    const step = () => {
+      if (i === 0) strip.reset();
+      if (i > 0) strip.mark(i - 1, 'ok');
+      strip.mark(i, 'cur');
+      strip.focus(i);
+      const n = noteInfo(demoSong.notes[i][0]);
+      $('demo-song-name').textContent = `${n.name}${n.octave}`;
+      i = (i + 1) % demoSong.notes.length;
+    };
+    step();
+    timers.push(setInterval(step, 750));
+  }
+  // Leitura: uma nota aparece, depois o nome é revelado
+  if ($('demo-staff')) {
+    const pool = [67, 72, 64, 76, 69, 62, 74, 71];
+    let k = 0;
+    const show = () => {
+      const m = pool[k++ % pool.length];
+      renderSingleNote($('demo-staff'), m);
+      const name = $('demo-read-name');
+      name.classList.remove('show');
+      const n = noteInfo(m);
+      name.textContent = `${n.name}${n.octave}`;
+      timers.push(setTimeout(() => name.classList.add('show'), 900));
+    };
+    show();
+    timers.push(setInterval(show, 2200));
+  }
+  return () => timers.forEach((t) => { clearInterval(t); clearTimeout(t); });
 }
 
 // ---------- Versão 2 ----------
