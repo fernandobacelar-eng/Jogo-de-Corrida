@@ -458,6 +458,11 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
   -webkit-mask: radial-gradient(circle, #000 42%, transparent 70%); mask: radial-gradient(circle, #000 42%, transparent 70%);
   animation: floaty 4s ease-in-out infinite;
 }
+.onb-art.art-wide { max-width: none; }
+.art-img.art-wide img {
+  width: min(460px, 100vw); height: auto; max-width: none; max-height: none; aspect-ratio: 16 / 9; border-radius: 28px;
+  -webkit-mask: radial-gradient(ellipse 50% 50% at center, #000 62%, transparent 100%); mask: radial-gradient(ellipse 50% 50% at center, #000 62%, transparent 100%);
+}
 @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .oa-track { fill: none; stroke: rgba(255, 255, 255, .08); stroke-width: 18; stroke-linecap: round; }
 .oa-arc { fill: none; stroke: var(--good); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 251; animation: arcGlow 2.4s ease-in-out infinite; }
