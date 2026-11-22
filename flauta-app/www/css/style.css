@@ -452,7 +452,13 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
 .onb-slide h2 { font-size: 27px; font-weight: 800; letter-spacing: -.6px; margin: 30px 0 10px; }
 .onb-slide p { color: #c3cbe0; font-size: 16px; max-width: 340px; margin: 0; }
 .onb-art { width: 100%; max-width: 340px; height: 240px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-.art-tuner svg { width: 250px; }
+.art-img { height: 300px; }
+.art-img img {
+  width: 300px; height: 300px; object-fit: cover; display: block;
+  -webkit-mask: radial-gradient(circle, #000 52%, transparent 71%); mask: radial-gradient(circle, #000 52%, transparent 71%);
+  animation: floaty 4s ease-in-out infinite;
+}
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .oa-track { fill: none; stroke: rgba(255, 255, 255, .08); stroke-width: 18; stroke-linecap: round; }
 .oa-arc { fill: none; stroke: var(--good); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 251; animation: arcGlow 2.4s ease-in-out infinite; }
 .oa-needle { transform-box: view-box; transform-origin: 100px 100px; animation: needleSwing 2.4s ease-in-out infinite; }
