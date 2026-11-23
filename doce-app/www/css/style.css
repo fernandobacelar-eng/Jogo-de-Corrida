@@ -702,6 +702,30 @@ main { max-width: 640px; margin: 0 auto; padding: 14px 14px 0; }
 .recorder .key.pressed.right .finger-num { fill: var(--gold-ink); }
 .recorder .key.halfway .halo { opacity: .35; }
 
+/* Flauta doce em pé: coluna da flauta + informações ao lado */
+.rc-layout { display: grid; grid-template-columns: 128px 1fr; gap: 12px; align-items: start; margin-top: 8px; }
+.flute.rc-col { margin: 0; padding: 4px 0; background: radial-gradient(80% 60% at 50% 45%, rgba(63, 123, 255, .14), transparent 75%); }
+.flute.rc-col .flute-svg { width: 100%; height: auto; max-height: 360px; }
+.flute.rc-col.small .flute-svg { max-height: 250px; }
+.rc-side { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.rc-side .fingers { margin-top: 0; }
+.rc-side .note-tip { margin-top: 0; }
+.rc-side .feedback { margin-top: 0; }
+.rc-side .legend { justify-content: flex-start; }
+.rc-side p { margin: 0; }
+.rc-center { align-self: center; text-align: center; }
+.rc-buttons { display: grid; gap: 8px; }
+.rc-buttons .btn { width: 100%; margin: 0; }
+.recorder .rc-link { stroke: #c9b48a; stroke-width: 1.2; stroke-dasharray: 3 3; opacity: .6; }
+#desc-small { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; overflow: visible; }
+#desc-small .sk { min-width: 0; }
+.song-card .rc-side .song-now { margin-top: 0; }
+.note-card.compact .fingers { font-size: 13.5px; }
+@media (max-height: 780px) {
+  .rc-layout { grid-template-columns: 112px 1fr; }
+  .flute.rc-col .flute-svg { max-height: 300px; }
+}
+
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

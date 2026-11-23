@@ -126,16 +126,20 @@
             <div class="note-meta" id="notas-meta"></div>
           </div>
         </div>
-        <div class="flute" id="notas-flute"></div>
-        <div class="fingers" id="notas-fingers"></div>
-        <p class="note-tip" id="notas-tip"></p>
-        <div class="row">
-          <button class="btn btn-primary" id="notas-play">🔊 Ouvir</button>
-          <button class="btn btn-mic" id="notas-listen">🎤 Detectar</button>
-        </div>
-        <div class="live" id="notas-live" hidden>
-          <span id="notas-live-text">Toque uma nota…</span>
-          <div class="meter small"><div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="notas-needle"></div></div></div>
+        <div class="rc-layout">
+          <div class="flute rc-col" id="notas-flute"></div>
+          <div class="rc-side">
+            <div class="fingers" id="notas-fingers"></div>
+            <p class="note-tip" id="notas-tip"></p>
+            <div class="rc-buttons">
+              <button class="btn btn-primary" id="notas-play">🔊 Ouvir</button>
+              <button class="btn btn-mic" id="notas-listen">🎤 Detectar</button>
+            </div>
+            <div class="live" id="notas-live" hidden>
+              <span id="notas-live-text">Toque uma nota…</span>
+              <div class="meter small"><div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="notas-needle"></div></div></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -174,12 +178,16 @@
               <div class="note-meta" id="lesson-meta"></div>
             </div>
           </div>
-          <div class="flute" id="lesson-flute"></div>
-          <div class="fingers" id="lesson-fingers"></div>
-          <div class="feedback" id="lesson-feedback">
-            <div class="feedback-text" id="lesson-fb-text">Toque a nota indicada.</div>
-            <div class="meter"><div class="meter-track"><div class="meter-ok" id="lesson-ok-zone"></div><div class="meter-needle" id="lesson-needle"></div></div></div>
-            <div class="hold"><div class="hold-bar" id="lesson-hold"></div></div>
+          <div class="rc-layout">
+            <div class="flute rc-col" id="lesson-flute"></div>
+            <div class="rc-side">
+              <div class="fingers" id="lesson-fingers"></div>
+              <div class="feedback" id="lesson-feedback">
+                <div class="feedback-text" id="lesson-fb-text">Toque a nota indicada.</div>
+                <div class="meter"><div class="meter-track"><div class="meter-ok" id="lesson-ok-zone"></div><div class="meter-needle" id="lesson-needle"></div></div></div>
+                <div class="hold"><div class="hold-bar" id="lesson-hold"></div></div>
+              </div>
+            </div>
           </div>
           <div class="row">
             <button class="btn" id="lesson-play">🔊 Ouvir</button>
@@ -203,7 +211,9 @@
       <div class="card">
         <h2>Que nota é esta?</h2>
         <p class="muted">Toque nos furos do desenho para marcar quais você está tampando. No polegar e nos furos duplos, cada toque alterna: fechado, metade, aberto.</p>
-        <div class="flute" id="desc-flute"></div>
+        <div class="rc-layout">
+          <div class="flute rc-col" id="desc-flute"></div>
+          <div class="rc-side">
         <div class="legend">
           <span><i class="dot dot-left"></i>Mão esquerda</span>
           <span><i class="dot dot-right"></i>Mão direita</span>
@@ -218,6 +228,8 @@
             <button class="sk right" data-k="R3h">Anelar<small>metade</small></button>
             <button class="sk right" data-k="R4">Mínimo<small>furo duplo</small></button>
             <button class="sk right" data-k="R4h">Mínimo<small>metade</small></button>
+          </div>
+        </div>
           </div>
         </div>
         <div class="fingers" id="desc-fingers"></div>
@@ -250,12 +262,16 @@
             <div class="count-big" id="song-count" hidden></div>
           </div>
           <label class="switch-row"><input type="checkbox" id="song-names" checked> Mostrar o nome das notas</label>
-          <div class="song-now">
-            <div class="song-now-l"><div class="kicker">Agora</div><div class="song-note" id="song-note">–</div></div>
-            <div class="song-fb" id="song-fb"></div>
+          <div class="rc-layout">
+            <div class="flute rc-col small" id="song-flute"></div>
+            <div class="rc-side">
+              <div class="song-now">
+                <div class="song-now-l"><div class="kicker">Agora</div><div class="song-note" id="song-note">–</div></div>
+              </div>
+              <div class="song-fb" id="song-fb"></div>
+              <div class="meter small"><div class="meter-track"><div class="meter-ok" id="song-ok-zone"></div><div class="meter-needle" id="song-needle"></div></div></div>
+            </div>
           </div>
-          <div class="flute" id="song-flute"></div>
-          <div class="meter small"><div class="meter-track"><div class="meter-ok" id="song-ok-zone"></div><div class="meter-needle" id="song-needle"></div></div></div>
           <div class="row">
             <button class="btn" id="song-listen">▶ Ouvir</button>
             <button class="btn btn-primary" id="song-play">🎤 Tocar</button>
@@ -322,8 +338,10 @@
         <div class="read-staff" id="read-staff"></div>
         <div class="read-q" id="read-q"></div>
         <div class="read-answer" id="read-answer" hidden>
-          <div class="read-name" id="read-name"></div>
-          <div class="flute" id="read-flute"></div>
+          <div class="rc-layout">
+            <div class="flute rc-col small" id="read-flute"></div>
+            <div class="rc-side rc-center"><div class="read-name" id="read-name"></div></div>
+          </div>
         </div>
         <div class="meter small"><div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="read-needle"></div></div></div>
         <div class="row">
@@ -337,11 +355,16 @@
     <section class="screen" id="screen-guia">
       <div class="card">
         <h2>Como ler a digitação</h2>
-        <div class="flute" id="guia-flute"></div>
-        <p><span class="swatch sw-left"></span><b>Azul:</b> furo tampado pela mão esquerda.</p>
-        <p><span class="swatch sw-right"></span><b>Dourado:</b> furo tampado pela mão direita.</p>
-        <p><span class="swatch sw-open"></span><b>Escuro:</b> furo aberto (dedo levantado). O número indica o dedo: 1 indicador, 2 médio, 3 anelar.</p>
-        <p class="muted">O furo do polegar fica atrás da flauta (desenhado embaixo). Pintado pela metade, significa <b>meia-tampa</b>: deixar uma pequena fresta. Os dois últimos furos são <b>duplos</b>: metade pintada significa tampar só um dos dois furinhos.</p>
+        <div class="rc-layout">
+          <div class="flute rc-col" id="guia-flute"></div>
+          <div class="rc-side">
+            <p><span class="swatch sw-left"></span><b>Azul:</b> furo tampado pela mão esquerda.</p>
+            <p><span class="swatch sw-right"></span><b>Dourado:</b> furo tampado pela mão direita.</p>
+            <p><span class="swatch sw-open"></span><b>Escuro:</b> furo aberto (dedo levantado).</p>
+            <p class="muted">O número indica o dedo: 1 indicador, 2 médio, 3 anelar. O exemplo mostra o Lá.</p>
+          </div>
+        </div>
+        <p class="muted">O furo do polegar fica atrás da flauta (desenhado ao lado, à direita). Pintado pela metade, significa <b>meia-tampa</b>: deixar uma pequena fresta. Os dois últimos furos são <b>duplos</b>: metade pintada significa tampar só um dos dois furinhos.</p>
       </div>
       <details class="card acc" open>
         <summary>Postura</summary>

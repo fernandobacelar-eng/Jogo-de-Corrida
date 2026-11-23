@@ -1,22 +1,22 @@
 // Desenho da FLAUTA DOCE (SVG) com os furos tampados destacados, e da nota na pauta.
-// Vista de frente, com o bico à esquerda. O furo do polegar (atrás) aparece abaixo do corpo.
+// Flauta EM PÉ, com o bico em cima. O furo do polegar (atrás) aparece ao lado, à direita.
 // Estados de um furo: aberto, fechado (cor da mão) ou meio fechado (metade colorida).
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 let uid = 0;
 
-const CY = 76; // linha central do corpo
+const CX = 104; // eixo da flauta (vertical)
 
-// Grupos de furos. Os furos duplos (R3, R4) têm dois furinhos.
+// Grupos de furos (de cima para baixo). Os furos duplos (R3, R4) têm dois furinhos lado a lado.
 const HOLES = [
-  { id: 'T', hand: 'left', holes: [{ x: 168, y: 128, r: 11 }], label: 'Polegar', sub: '(atrás)', back: true },
-  { id: 'L1', hand: 'left', holes: [{ x: 196, y: CY, r: 10.5 }], label: 'Ind.', finger: '1' },
-  { id: 'L2', hand: 'left', holes: [{ x: 240, y: CY, r: 10.5 }], label: 'Méd.', finger: '2' },
-  { id: 'L3', hand: 'left', holes: [{ x: 284, y: CY, r: 10.5 }], label: 'Anel.', finger: '3' },
-  { id: 'R1', hand: 'right', holes: [{ x: 350, y: CY, r: 10.5 }], label: 'Ind.', finger: '1' },
-  { id: 'R2', hand: 'right', holes: [{ x: 394, y: CY, r: 10.5 }], label: 'Méd.', finger: '2' },
-  { id: 'R3', hand: 'right', holes: [{ x: 431, y: CY, r: 6.5 }, { x: 448, y: CY, r: 5 }], label: 'Anel.' },
-  { id: 'R4', hand: 'right', holes: [{ x: 478, y: CY + 1, r: 5.5 }, { x: 493, y: CY + 1, r: 4.5 }], label: 'Mín.' },
+  { id: 'T', hand: 'left', holes: [{ x: CX + 58, y: 196, r: 11 }], label: 'Polegar', sub: '(atrás)', back: true },
+  { id: 'L1', hand: 'left', holes: [{ x: CX, y: 196, r: 11 }], label: 'Ind.', finger: '1' },
+  { id: 'L2', hand: 'left', holes: [{ x: CX, y: 240, r: 11 }], label: 'Méd.', finger: '2' },
+  { id: 'L3', hand: 'left', holes: [{ x: CX, y: 284, r: 11 }], label: 'Anel.', finger: '3' },
+  { id: 'R1', hand: 'right', holes: [{ x: CX, y: 346, r: 11 }], label: 'Ind.', finger: '1' },
+  { id: 'R2', hand: 'right', holes: [{ x: CX, y: 390, r: 11 }], label: 'Méd.', finger: '2' },
+  { id: 'R3', hand: 'right', holes: [{ x: CX - 7, y: 432, r: 6.5 }, { x: CX + 8.5, y: 432, r: 5 }], label: 'Anel.' },
+  { id: 'R4', hand: 'right', holes: [{ x: CX - 6, y: 470, r: 5.5 }, { x: CX + 7.5, y: 470, r: 4.5 }], label: 'Mín.' },
 ];
 
 function el(name, attrs = {}, parent) {
@@ -28,12 +28,12 @@ function el(name, attrs = {}, parent) {
 
 export function createFlute(container, { onKeyTap } = {}) {
   const id = 'rc' + (++uid);
-  const W = 560, H = 160;
-  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'flute-svg recorder' + (onKeyTap ? ' interactive' : ''), role: 'img', 'aria-label': 'Desenho da flauta doce com os furos' });
+  const W = 200, H = 540;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'flute-svg recorder vertical' + (onKeyTap ? ' interactive' : ''), role: 'img', 'aria-label': 'Desenho da flauta doce com os furos' });
   const defs = el('defs', {}, svg);
-  const body = el('linearGradient', { id: id + 'body', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+  const body = el('linearGradient', { id: id + 'body', x1: 0, y1: 0, x2: 1, y2: 0 }, defs);
   [['0%', '#b89a66'], ['22%', '#f7ecd2'], ['45%', '#efe0bd'], ['100%', '#a8875a']].forEach(([o, c]) => el('stop', { offset: o, 'stop-color': c }, body));
-  const joint = el('linearGradient', { id: id + 'joint', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+  const joint = el('linearGradient', { id: id + 'joint', x1: 0, y1: 0, x2: 1, y2: 0 }, defs);
   [['0%', '#5a3a1e'], ['35%', '#a0703f'], ['100%', '#3e2612']].forEach(([o, c]) => el('stop', { offset: o, 'stop-color': c }, joint));
   for (const hand of ['left', 'right']) {
     const g = el('radialGradient', { id: `${id}${hand}`, cx: '38%', cy: '30%', r: '80%' }, defs);
@@ -42,29 +42,29 @@ export function createFlute(container, { onKeyTap } = {}) {
   }
   const glow = el('filter', { id: id + 'glow', x: '-60%', y: '-60%', width: '220%', height: '220%' }, defs);
   el('feGaussianBlur', { in: 'SourceGraphic', stdDeviation: 3 }, glow);
-  const shadow = el('filter', { id: id + 'sh', x: '-10%', y: '-30%', width: '120%', height: '180%' }, defs);
-  el('feDropShadow', { dx: 0, dy: 3, stdDeviation: 3, 'flood-opacity': 0.3 }, shadow);
+  const shadow = el('filter', { id: id + 'sh', x: '-40%', y: '-5%', width: '180%', height: '110%' }, defs);
+  el('feDropShadow', { dx: 3, dy: 3, stdDeviation: 3, 'flood-opacity': 0.3 }, shadow);
 
-  // Rótulos das mãos
+  // Rótulos das mãos (à esquerda, na vertical)
   const lh = el('g', { class: 'hand-bracket left' }, svg);
-  el('path', { d: 'M176 24 h128', class: 'bracket-line' }, lh);
-  el('text', { x: 240, y: 18, 'text-anchor': 'middle', class: 'hand-label' }, lh).textContent = 'MÃO ESQUERDA';
+  el('path', { d: 'M22 182 v116', class: 'bracket-line' }, lh);
+  el('text', { x: 14, y: 240, 'text-anchor': 'middle', class: 'hand-label', transform: 'rotate(-90 14 240)' }, lh).textContent = 'MÃO ESQUERDA';
   const rh = el('g', { class: 'hand-bracket right' }, svg);
-  el('path', { d: 'M332 24 h170', class: 'bracket-line' }, rh);
-  el('text', { x: 417, y: 18, 'text-anchor': 'middle', class: 'hand-label' }, rh).textContent = 'MÃO DIREITA';
+  el('path', { d: 'M22 332 v148', class: 'bracket-line' }, rh);
+  el('text', { x: 14, y: 406, 'text-anchor': 'middle', class: 'hand-label', transform: 'rotate(-90 14 406)' }, rh).textContent = 'MÃO DIREITA';
 
-  // Corpo: bico, cabeça, corpo levemente cônico e pé
+  // Corpo em pé: bico em cima, cabeça, corpo levemente cônico e pé
   const g = el('g', { filter: `url(#${id}sh)` }, svg);
-  el('path', { d: `M8 ${CY - 10} q0 -6 8 -7 l62 -5 v38 l-62 -5 q-8 -1 -8 -7 z`, fill: `url(#${id}body)`, class: 'rc-edge' }, g); // bico
-  el('rect', { x: 76, y: CY - 18, width: 70, height: 36, rx: 8, fill: `url(#${id}body)`, class: 'rc-edge' }, g); // cabeça
-  el('rect', { x: 140, y: CY - 20, width: 12, height: 40, rx: 4, fill: `url(#${id}joint)` }, g); // anel
-  el('path', { d: `M150 ${CY - 16} L512 ${CY - 13} L512 ${CY + 13} L150 ${CY + 16} z`, fill: `url(#${id}body)`, class: 'rc-edge' }, g); // corpo
-  el('rect', { x: 508, y: CY - 17, width: 12, height: 34, rx: 4, fill: `url(#${id}joint)` }, g); // anel do pé
-  el('path', { d: `M518 ${CY - 14} q22 -4 34 -10 v48 q-12 -6 -34 -10 z`, fill: `url(#${id}body)`, class: 'rc-edge' }, g); // pé (campana)
-  // janela (embocadura) e lábio
-  el('rect', { x: 92, y: CY - 7, width: 16, height: 12, rx: 2, fill: '#2a1a0b' }, svg);
-  el('path', { d: `M92 ${CY + 5} h16 l-3 -4 h-10 z`, fill: '#d9c49b' }, svg);
-  el('ellipse', { cx: 22, cy: CY, rx: 3, ry: 9, fill: '#2a1a0b', opacity: 0.55 }, svg); // canal de ar
+  el('path', { d: `M${CX - 10} 8 q-6 0 -7 8 l-5 62 h44 l-5 -62 q-1 -8 -7 -8 z`, fill: `url(#${id}body)`, class: 'rc-edge' }, g); // bico
+  el('rect', { x: CX - 20, y: 76, width: 40, height: 74, rx: 9, fill: `url(#${id}body)`, class: 'rc-edge' }, g); // cabeça
+  el('rect', { x: CX - 22, y: 144, width: 44, height: 12, rx: 4, fill: `url(#${id}joint)` }, g); // anel
+  el('path', { d: `M${CX - 17} 154 L${CX - 14} 494 L${CX + 14} 494 L${CX + 17} 154 z`, fill: `url(#${id}body)`, class: 'rc-edge' }, g); // corpo
+  el('rect', { x: CX - 18, y: 490, width: 36, height: 12, rx: 4, fill: `url(#${id}joint)` }, g); // anel do pé
+  el('path', { d: `M${CX - 15} 500 q-4 22 -11 34 h52 q-7 -12 -11 -34 z`, fill: `url(#${id}body)`, class: 'rc-edge' }, g); // pé (campana)
+  // janela e lábio, canal de ar
+  el('rect', { x: CX - 7, y: 92, width: 14, height: 17, rx: 2, fill: '#2a1a0b' }, svg);
+  el('path', { d: `M${CX - 7} 92 v16 l4 -3 v-10 z`, fill: '#d9c49b' }, svg);
+  el('ellipse', { cx: CX, cy: 20, rx: 8, ry: 3, fill: '#2a1a0b', opacity: 0.55 }, svg);
 
   const nodes = {};
   for (const h of HOLES) {
@@ -74,7 +74,6 @@ export function createFlute(container, { onKeyTap } = {}) {
       el('circle', { cx: p.x, cy: p.y, r: p.r + 5, class: 'halo', filter: `url(#${id}glow)` }, grp);
       el('circle', { cx: p.x, cy: p.y, r: p.r + 1.6, class: 'rc-rim' }, grp);
       el('circle', { cx: p.x, cy: p.y, r: p.r, class: 'rc-hole' + (h.back ? ' back' : '') }, grp);
-      // preenchimento inteiro e metade (para meia-tampa / metade do furo duplo)
       const full = el('circle', { cx: p.x, cy: p.y, r: p.r, fill: `url(#${id}${h.hand})`, class: 'rc-fill' }, grp);
       const clipId = `${id}${h.id}c${idx}`;
       const cp = el('clipPath', { id: clipId }, defs);
@@ -84,16 +83,17 @@ export function createFlute(container, { onKeyTap } = {}) {
     });
     const p0 = h.holes[0];
     if (h.finger) el('text', { x: p0.x, y: p0.y + 4.5, 'text-anchor': 'middle', class: 'finger-num' }, grp).textContent = h.finger;
-    const lx = h.holes.length > 1 ? (h.holes[0].x + h.holes[1].x) / 2 : p0.x;
     if (h.back) {
-      el('text', { x: p0.x + 18, y: p0.y + 4, class: 'key-label' }, grp).textContent = h.label;
-      el('text', { x: p0.x + 18, y: p0.y + 17, class: 'tiny-label' }, grp).textContent = h.sub;
+      el('text', { x: p0.x, y: p0.y + 26, 'text-anchor': 'middle', class: 'key-label' }, grp).textContent = h.label;
+      el('text', { x: p0.x, y: p0.y + 38, 'text-anchor': 'middle', class: 'tiny-label' }, grp).textContent = h.sub;
+      el('path', { d: `M${CX + 22} ${p0.y} h${58 - 22 - 15}`, class: 'rc-link' }, grp);
     } else {
-      el('text', { x: lx, y: CY - 22, 'text-anchor': 'middle', class: 'key-label' }, grp).textContent = h.label;
+      const lx = Math.min(...h.holes.map((p) => p.x - p.r)) - 8;
+      el('text', { x: lx, y: p0.y + 4, 'text-anchor': 'end', class: 'key-label' }, grp).textContent = h.label;
     }
     if (onKeyTap) {
       const minX = Math.min(...h.holes.map((p) => p.x - p.r)), maxX = Math.max(...h.holes.map((p) => p.x + p.r));
-      el('rect', { x: minX - 8, y: p0.y - 18, width: maxX - minX + 16, height: 36, rx: 10, class: 'hit' }, grp);
+      el('rect', { x: minX - 14, y: p0.y - 18, width: maxX - minX + 28, height: 36, rx: 10, class: 'hit' }, grp);
       grp.addEventListener('click', () => onKeyTap(h.id));
     }
     nodes[h.id] = { grp, fills, double: h.holes.length > 1 };
@@ -118,8 +118,8 @@ export function createFlute(container, { onKeyTap } = {}) {
           let showFull = st === 'full';
           let showHalf = false;
           if (st === 'half') {
-            if (n.double) showFull = i === 0; // metade do furo duplo: só o furinho maior
-            else showHalf = true; // meia-tampa do polegar
+            if (n.double) showFull = i === 0;
+            else showHalf = true;
           }
           f.full.style.opacity = showFull ? 1 : 0;
           f.half.style.opacity = showHalf ? 1 : 0;
