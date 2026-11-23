@@ -16,3 +16,11 @@ App separado, que pode ficar instalado junto com a versão 1.
 - **APK:** https://github.com/fernandobacelar-eng/Jogo-de-Corrida/releases/download/flauta-guia-2/flauta-guia-2.apk
 - Identificador Android: `com.flautaguia.app2`
 - Novidades: músicas com partitura correndo, metrônomo e exercícios de ritmo, treino de leitura de partitura.
+
+## Flauta Doce Guia (nova)
+
+App separado para flauta doce soprano (digitação barroca), com as mesmas funções da versão 2.
+
+- **APK:** https://github.com/fernandobacelar-eng/Jogo-de-Corrida/releases/download/flauta-doce/flauta-doce-guia.apk
+- Pasta: `doce-app/` · Identificador Android: `com.flautaguia.doce`
+- Imagens e logotipo provisórios.

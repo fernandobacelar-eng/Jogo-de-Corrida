@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <title>Flauta Doce Guia</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <img class="logo" src="img/logo.jpg" alt="" aria-hidden="true">
+    <h1>Flauta Doce <span class="gold">Guia</span></h1>
+    <span class="topbar-sub" id="topbar-sub">Início</span>
+  </header>
+
+  <main>
+    <!-- ============ INÍCIO ============ -->
+    <section class="screen active" id="screen-inicio">
+      <div class="hero">
+        <div class="hero-text">
+          <div class="kicker" id="home-greet">Olá!</div>
+          <h2 class="hero-title">Pronto para<br>praticar?</h2>
+          <p class="muted" id="home-sub">Comece afinando a flauta.</p>
+        </div>
+        <div class="ring" id="home-ring">
+          <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fg" id="home-ring-fg"/></svg>
+          <div class="ring-label"><b id="home-done">0</b><small id="home-total">de 13</small></div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-big btn-continue" id="home-continue">
+        <span class="bc-kicker">Continuar</span>
+        <span class="bc-title" id="home-continue-title">Lição 1</span>
+      </button>
+
+      <button class="tile tile-wide" data-go="afinar">
+        <span class="tile-ico ti-blue"><svg viewBox="0 0 24 24"><path d="M9 2v8a3 3 0 0 0 6 0V2M12 13v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="tile-body"><b>Afinar a flauta</b><small>Lá de referência e afinador</small></span>
+        <span class="tile-go">›</span>
+      </button>
+      <div class="tiles">
+        <button class="tile" data-go="musicas"><span class="tile-ico ti-gold"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg></span><b>Músicas</b><small>Toque com a partitura</small></button>
+        <button class="tile" data-go="leitura"><span class="tile-ico ti-blue"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 10h18M3 14h18M3 18h18" stroke="currentColor" stroke-width="1.6"/><ellipse cx="14" cy="14" rx="3" ry="2.2" fill="currentColor" transform="rotate(-20 14 14)"/></svg></span><b>Leitura</b><small>Leia e toque a nota</small></button>
+        <button class="tile" data-go="metro"><span class="tile-ico ti-green"><svg viewBox="0 0 24 24"><path d="M9 3h6l4 18H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 15l5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 17h10" stroke="currentColor" stroke-width="2"/></svg></span><b>Ritmo</b><small>Metrônomo e exercícios</small></button>
+        <button class="tile" data-go="descobrir"><span class="tile-ico ti-violet"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><b>Descobrir</b><small>Que nota é esta?</small></button>
+        <button class="tile" data-go="licoes"><span class="tile-ico ti-blue"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><b>Lições</b><small>Passo a passo</small></button>
+        <button class="tile" data-go="guia"><span class="tile-ico ti-rose"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6a3 3 0 0 0-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 4v14h-7" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><b>Guia</b><small>Postura e sopro</small></button>
+      </div>
+      <div class="card tip-day">
+        <div class="kicker">Dica do dia</div>
+        <p id="home-tip"></p>
+      </div>
+    </section>
+
+    <!-- ============ AFINAR ============ -->
+    <section class="screen" id="screen-afinar">
+      <div class="card">
+        <h2>1. Ouça o Lá de referência</h2>
+        <p class="muted">Antes de começar, afine a flauta com o Lá (A4).</p>
+        <button class="btn btn-primary btn-big" id="btn-ref">▶ Tocar Lá de referência</button>
+        <div class="calib">
+          <button class="btn btn-round" id="calib-minus" aria-label="Diminuir frequência">−</button>
+          <div class="calib-value"><strong id="calib-hz">440</strong> Hz<small>frequência do Lá</small></div>
+          <button class="btn btn-round" id="calib-plus" aria-label="Aumentar frequência">+</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2. Toque o Lá na sua flauta</h2>
+        <p class="muted">Digitação do Lá: polegar fechando o furo de trás + indicador e médio esquerdos.</p>
+        <button class="btn btn-mic" id="btn-tuner">🎤 Ouvir minha flauta</button>
+        <div class="tuner" id="tuner">
+          <div class="tuner-note"><span id="tuner-note">–</span><small id="tuner-hz"></small></div>
+          <div class="gauge">
+            <svg viewBox="0 0 200 118" aria-hidden="true">
+              <defs>
+                <linearGradient id="gauge-grad" x1="0" x2="1">
+                  <stop offset="0" stop-color="#f87171"/><stop offset=".38" stop-color="#fbbf24"/>
+                  <stop offset=".5" stop-color="#34d399"/><stop offset=".62" stop-color="#fbbf24"/><stop offset="1" stop-color="#f87171"/>
+                </linearGradient>
+              </defs>
+              <path d="M20 100 A80 80 0 0 1 180 100" class="gauge-track"/>
+              <path d="M20 100 A80 80 0 0 1 180 100" class="gauge-color" stroke="url(#gauge-grad)"/>
+              <g class="gauge-ticks"></g>
+              <text x="20" y="116" text-anchor="middle" class="gauge-lbl">−50</text>
+              <text x="100" y="12" text-anchor="middle" class="gauge-lbl">0</text>
+              <text x="180" y="116" text-anchor="middle" class="gauge-lbl">+50</text>
+              <g id="tuner-needle" class="gauge-needle idle" data-gauge="1">
+                <line x1="100" y1="100" x2="100" y2="30"/>
+              </g>
+              <circle cx="100" cy="100" r="7" class="gauge-hub"/>
+            </svg>
+          </div>
+          <div class="tuner-msg" id="tuner-msg">Toque uma nota longa e estável.</div>
+        </div>
+      </div>
+
+      <div class="card tip">
+        <strong>Como corrigir a afinação</strong>
+        <p><b>Som alto (agulha para a direita):</b> puxe a cabeça da flauta um pouco para fora, ou sopre um pouco mais suave.</p>
+        <p><b>Som baixo (agulha para a esquerda):</b> empurre a cabeça da flauta para dentro, ou sopre um pouco mais firme.</p>
+        <p class="muted">Mexa poucos milímetros de cada vez. Aqueça a flauta tocando por um minuto antes de afinar: flauta fria soa mais baixo.</p>
+      </div>
+    </section>
+
+    <!-- ============ NOTAS ============ -->
+    <section class="screen" id="screen-notas">
+      <div class="card note-card compact">
+        <div class="pickers">
+          <label class="picker">
+            <span>Oitava</span>
+            <select id="oct-select" aria-label="Escolher a oitava">
+              <option value="4">Grave</option>
+              <option value="5">Aguda</option>
+            </select>
+          </label>
+          <label class="picker picker-note">
+            <span>Nota</span>
+            <select id="note-select" aria-label="Escolher a nota"></select>
+          </label>
+        </div>
+        <div class="note-head-row">
+          <div class="staff" id="notas-staff"></div>
+          <div class="note-title">
+            <div class="note-name" id="notas-name">Lá4</div>
+            <div class="note-meta" id="notas-meta"></div>
+          </div>
+        </div>
+        <div class="flute" id="notas-flute"></div>
+        <div class="fingers" id="notas-fingers"></div>
+        <p class="note-tip" id="notas-tip"></p>
+        <div class="row">
+          <button class="btn btn-primary" id="notas-play">🔊 Ouvir</button>
+          <button class="btn btn-mic" id="notas-listen">🎤 Detectar</button>
+        </div>
+        <div class="live" id="notas-live" hidden>
+          <span id="notas-live-text">Toque uma nota…</span>
+          <div class="meter small"><div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="notas-needle"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIÇÕES ============ -->
+    <section class="screen" id="screen-licoes">
+      <div id="lesson-list-view">
+        <div class="card">
+          <h2>Lições</h2>
+          <p class="muted">Siga em ordem. O app escuta você e só avança quando a nota estiver certa.</p>
+          <label class="field">Tolerância de afinação
+            <select id="tolerance">
+              <option value="40">Iniciante (±40 cents)</option>
+              <option value="25">Intermediário (±25 cents)</option>
+              <option value="12">Avançado (±12 cents)</option>
+            </select>
+          </label>
+        </div>
+        <ol class="lesson-list" id="lesson-list"></ol>
+        <button class="btn btn-ghost" id="btn-unlock">Desbloquear todas as lições</button>
+      </div>
+
+      <div id="lesson-view" hidden>
+        <div class="card">
+          <button class="btn btn-ghost btn-back" id="lesson-back">← Lições</button>
+          <h2 id="lesson-title"></h2>
+          <p class="muted" id="lesson-intro"></p>
+          <div class="chips" id="lesson-chips"></div>
+        </div>
+        <div class="card note-card" id="lesson-stage">
+          <div class="note-head-row">
+            <div class="staff" id="lesson-staff"></div>
+            <div class="note-title">
+              <div class="kicker">Toque agora</div>
+              <div class="note-name" id="lesson-name"></div>
+              <div class="note-meta" id="lesson-meta"></div>
+            </div>
+          </div>
+          <div class="flute" id="lesson-flute"></div>
+          <div class="fingers" id="lesson-fingers"></div>
+          <div class="feedback" id="lesson-feedback">
+            <div class="feedback-text" id="lesson-fb-text">Toque a nota indicada.</div>
+            <div class="meter"><div class="meter-track"><div class="meter-ok" id="lesson-ok-zone"></div><div class="meter-needle" id="lesson-needle"></div></div></div>
+            <div class="hold"><div class="hold-bar" id="lesson-hold"></div></div>
+          </div>
+          <div class="row">
+            <button class="btn" id="lesson-play">🔊 Ouvir</button>
+            <button class="btn" id="lesson-skip">Pular nota ›</button>
+          </div>
+        </div>
+        <div class="card done" id="lesson-done" hidden>
+          <div class="done-icon">✓</div>
+          <h2>Lição concluída!</h2>
+          <p id="lesson-done-text"></p>
+          <div class="row">
+            <button class="btn" id="lesson-again">Repetir</button>
+            <button class="btn btn-primary" id="lesson-next">Próxima lição ›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DESCOBRIR ============ -->
+    <section class="screen" id="screen-descobrir">
+      <div class="card">
+        <h2>Que nota é esta?</h2>
+        <p class="muted">Toque nos furos do desenho para marcar quais você está tampando. No polegar e nos furos duplos, cada toque alterna: fechado, metade, aberto.</p>
+        <div class="flute" id="desc-flute"></div>
+        <div class="legend">
+          <span><i class="dot dot-left"></i>Mão esquerda</span>
+          <span><i class="dot dot-right"></i>Mão direita</span>
+          <span><i class="dot dot-open"></i>Solta</span>
+        </div>
+        <div class="small-keys">
+          <div class="kicker">Polegar e furos duplos</div>
+          <div class="sk-row" id="desc-small">
+            <button class="sk left" data-k="T">Polegar<small>fechado</small></button>
+            <button class="sk left" data-k="Th">Polegar<small>meia-tampa</small></button>
+            <button class="sk right" data-k="R3">Anelar<small>furo duplo</small></button>
+            <button class="sk right" data-k="R3h">Anelar<small>metade</small></button>
+            <button class="sk right" data-k="R4">Mínimo<small>furo duplo</small></button>
+            <button class="sk right" data-k="R4h">Mínimo<small>metade</small></button>
+          </div>
+        </div>
+        <div class="fingers" id="desc-fingers"></div>
+        <div class="row">
+          <button class="btn" id="desc-clear">Limpar</button>
+        </div>
+      </div>
+      <div class="card" id="desc-result"></div>
+    </section>
+
+    <!-- ============ MÚSICAS ============ -->
+    <section class="screen" id="screen-musicas">
+      <div id="songs-list-view">
+        <div class="card">
+          <h2>Músicas</h2>
+          <p class="muted">Toque junto com a partitura. O app escuta e confere nota por nota.</p>
+        </div>
+        <div id="songs-list"></div>
+      </div>
+      <div id="song-view" hidden>
+        <div class="card song-card" id="song-card">
+          <div class="song-top">
+            <button class="btn btn-ghost btn-back" id="song-back">← Músicas</button>
+            <div class="song-tempo"><button class="btn btn-mini" id="song-slower" aria-label="Mais devagar">−</button><span><b id="song-bpm">84</b> bpm</span><button class="btn btn-mini" id="song-faster" aria-label="Mais rápido">+</button></div>
+          </div>
+          <h2 id="song-title"></h2>
+          <div class="seg" id="song-mode"><button data-mode="wait" class="on">Esperar por mim</button><button data-mode="rhythm">Com ritmo</button></div>
+          <div class="score-wrap">
+            <div id="song-score"></div>
+            <div class="count-big" id="song-count" hidden></div>
+          </div>
+          <label class="switch-row"><input type="checkbox" id="song-names" checked> Mostrar o nome das notas</label>
+          <div class="song-now">
+            <div class="song-now-l"><div class="kicker">Agora</div><div class="song-note" id="song-note">–</div></div>
+            <div class="song-fb" id="song-fb"></div>
+          </div>
+          <div class="flute" id="song-flute"></div>
+          <div class="meter small"><div class="meter-track"><div class="meter-ok" id="song-ok-zone"></div><div class="meter-needle" id="song-needle"></div></div></div>
+          <div class="row">
+            <button class="btn" id="song-listen">▶ Ouvir</button>
+            <button class="btn btn-primary" id="song-play">🎤 Tocar</button>
+          </div>
+        </div>
+        <div class="card done" id="song-done" hidden>
+          <div class="done-icon">♪</div>
+          <h2 id="song-done-title"></h2>
+          <p id="song-done-text"></p>
+          <div class="row">
+            <button class="btn" id="song-again">Tocar de novo</button>
+            <button class="btn btn-primary" id="song-done-back">Outras músicas</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ METRÔNOMO E RITMO ============ -->
+    <section class="screen" id="screen-metro">
+      <div id="metro-main">
+        <div class="card metro-card">
+          <h2>Metrônomo</h2>
+          <div class="metro-bpm">
+            <button class="btn btn-round" id="metro-minus" aria-label="Diminuir andamento">−</button>
+            <div class="metro-val"><b id="metro-bpm">80</b><small><span id="metro-name">Andante</span> · bpm</small></div>
+            <button class="btn btn-round" id="metro-plus" aria-label="Aumentar andamento">+</button>
+          </div>
+          <input type="range" class="slider" id="metro-slider" min="40" max="208" value="80" aria-label="Andamento">
+          <div class="metro-dots" id="metro-dots"></div>
+          <div class="seg" id="metro-sig"><button data-b="2">2/4</button><button data-b="3">3/4</button><button data-b="4" class="on">4/4</button><button data-b="6">6/8</button></div>
+          <div class="row">
+            <button class="btn" id="metro-tap" title="Toque várias vezes no andamento desejado">👆 Marcar</button>
+            <button class="btn btn-primary" id="metro-start">▶ Iniciar</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Exercícios de ritmo</h2>
+          <p class="muted">O app ouve quando cada nota começa e mostra se você entrou no tempo. O andamento é o do metrônomo acima.</p>
+          <div id="rhythm-list"></div>
+        </div>
+      </div>
+      <div class="card" id="rhythm-view" hidden>
+        <button class="btn btn-ghost btn-back" id="rh-back">← Ritmo</button>
+        <h2 id="rh-title"></h2>
+        <p class="muted" id="rh-desc"></p>
+        <div class="score-wrap">
+          <div id="rh-score"></div>
+          <div class="count-big" id="rh-count" hidden></div>
+        </div>
+        <div class="rh-fb" id="rh-fb"></div>
+        <div class="rh-result" id="rh-result"></div>
+        <div class="row"><button class="btn btn-primary" id="rh-start">▶ Começar</button></div>
+      </div>
+    </section>
+
+    <!-- ============ LEITURA ============ -->
+    <section class="screen" id="screen-leitura">
+      <div class="card read-card">
+        <div class="read-top">
+          <label class="picker"><span>Notas do treino</span><select id="read-range" aria-label="Notas do treino"></select></label>
+          <div class="read-score"><b id="read-points">0</b><small>de 10</small></div>
+        </div>
+        <div class="read-dots" id="read-dots"></div>
+        <div class="read-staff" id="read-staff"></div>
+        <div class="read-q" id="read-q"></div>
+        <div class="read-answer" id="read-answer" hidden>
+          <div class="read-name" id="read-name"></div>
+          <div class="flute" id="read-flute"></div>
+        </div>
+        <div class="meter small"><div class="meter-track"><div class="meter-ok"></div><div class="meter-needle" id="read-needle"></div></div></div>
+        <div class="row">
+          <button class="btn" id="read-reveal">💡 Mostrar resposta</button>
+          <button class="btn btn-primary" id="read-start">🎤 Começar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EMBOCADURA ============ -->
+    <section class="screen" id="screen-guia">
+      <div class="card">
+        <h2>Como ler a digitação</h2>
+        <div class="flute" id="guia-flute"></div>
+        <p><span class="swatch sw-left"></span><b>Azul:</b> furo tampado pela mão esquerda.</p>
+        <p><span class="swatch sw-right"></span><b>Dourado:</b> furo tampado pela mão direita.</p>
+        <p><span class="swatch sw-open"></span><b>Escuro:</b> furo aberto (dedo levantado). O número indica o dedo: 1 indicador, 2 médio, 3 anelar.</p>
+        <p class="muted">O furo do polegar fica atrás da flauta (desenhado embaixo). Pintado pela metade, significa <b>meia-tampa</b>: deixar uma pequena fresta. Os dois últimos furos são <b>duplos</b>: metade pintada significa tampar só um dos dois furinhos.</p>
+      </div>
+      <details class="card acc" open>
+        <summary>Postura</summary>
+        <p>Sente-se ou fique em pé com as costas retas e os ombros soltos. A flauta fica à frente do corpo, inclinada para baixo, num ângulo de cerca de 45°.</p>
+        <p>Mão esquerda em cima (perto do bico) e mão direita embaixo. O polegar direito apoia a flauta por trás, entre o 4º e o 5º furo.</p>
+        <p>Tampe os furos com a <b>polpa</b> dos dedos (a parte macia), sem apertar. Dedos curvados e sempre perto dos furos.</p>
+      </details>
+      <details class="card acc">
+        <summary>Sopro</summary>
+        <p>Coloque o bico entre os lábios, sem encostar nos dentes. Os lábios apenas envolvem o bico, sem morder.</p>
+        <p>O sopro da flauta doce é <b>muito suave</b>: imagine que está embaçando um vidro bem devagar. Soprar forte faz a nota "pular" para cima ou chiar.</p>
+        <p>Notas graves pedem ainda menos ar. Notas agudas pedem um pouco mais de pressão, sem exagero.</p>
+      </details>
+      <details class="card acc">
+        <summary>Meia-tampa do polegar</summary>
+        <p>A partir do Mi agudo, o polegar fica em <b>meia-tampa</b>: dobre a ponta do polegar (ou role a unha sobre o furo) deixando uma pequena fresta aberta.</p>
+        <p>Comece com o Mi grave, depois mude só o polegar para meia-tampa e sopre um pouco mais firme: deve sair o Mi agudo.</p>
+      </details>
+      <details class="card acc">
+        <summary>Articulação (golpe de língua)</summary>
+        <p>Comece cada nota dizendo “du” sem voz: a ponta da língua toca atrás dos dentes de cima e solta o ar.</p>
+        <p>Use “tu” para notas mais destacadas. Evite começar as notas soprando com a garganta (“ha”).</p>
+      </details>
+      <details class="card acc">
+        <summary>Respiração</summary>
+        <p>Inspire pela boca, enchendo a parte de baixo dos pulmões, sem levantar os ombros.</p>
+        <p>Exercício: toque uma nota longa (Si ou Lá) contando quantos segundos o som se mantém estável e afinado.</p>
+      </details>
+      <details class="card acc">
+        <summary>Cuidados com a flauta doce</summary>
+        <p>Antes de tocar, aqueça a cabeça da flauta nas mãos: isso evita que a janela entupa com a umidade.</p>
+        <p>Se o som ficar abafado, tape a janela com o dedo e sopre forte uma vez para limpar o canal.</p>
+        <p>Flautas de plástico podem ser lavadas com água morna e sabão neutro. Seque bem e guarde no estojo.</p>
+      </details>
+      <p class="credits muted">Digitação barroca (inglesa) para flauta doce soprano. As notas aparecem como escritas na partitura; o som real é uma oitava acima. Se a sua flauta for germânica, o Fá muda.</p>
+    </section>
+    <footer class="credit"><span class="credit-line"></span><span class="credit-text">Um programa de <b>Fernando Bacelar</b></span><span class="credit-line"></span></footer>
+  </main>
+
+  <nav class="bottomnav" id="bottomnav">
+    <button class="nav-btn active" data-screen="inicio"><svg viewBox="0 0 24 24" class="ico"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Início</button>
+    <button class="nav-btn" data-screen="afinar"><svg viewBox="0 0 24 24" class="ico"><path d="M9 2v8a3 3 0 0 0 6 0V2M12 13v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Afinar</button>
+    <button class="nav-btn" data-screen="notas"><svg viewBox="0 0 24 24" class="ico"><rect x="2.5" y="10" width="19" height="4.4" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="12.2" r="1.1" fill="currentColor"/><circle cx="12.5" cy="12.2" r="1.1" fill="currentColor"/><circle cx="16" cy="12.2" r="1.1" fill="currentColor"/><path d="M5.5 10v4.4" stroke="currentColor" stroke-width="1.4"/></svg>Notas</button>
+    <button class="nav-btn" data-screen="musicas"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg>Músicas</button>
+    <button class="nav-btn" data-screen="licoes"><svg viewBox="0 0 24 24" class="ico"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Lições</button>
+    <button class="nav-btn" data-screen="metro"><svg viewBox="0 0 24 24" class="ico"><path d="M9 3h6l4 18H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 15l5-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 17h10" stroke="currentColor" stroke-width="2"/></svg>Ritmo</button>
+    <button class="nav-btn" data-screen="leitura"><svg viewBox="0 0 24 24" class="ico"><path d="M3 6h18M3 10h18M3 14h18M3 18h18" stroke="currentColor" stroke-width="1.6"/><ellipse cx="14" cy="14" rx="3" ry="2.2" fill="currentColor" transform="rotate(-20 14 14)"/></svg>Leitura</button>
+    <button class="nav-btn" data-screen="descobrir"><svg viewBox="0 0 24 24" class="ico"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Descobrir</button>
+    <button class="nav-btn" data-screen="guia"><svg viewBox="0 0 24 24" class="ico"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6a3 3 0 0 0-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 4v14h-7" fill="none" stroke="currentColor" stroke-width="2"/></svg>Guia</button>
+  </nav>
+
+  <!-- Abertura animada -->
+  <div class="intro" id="intro">
+    <div class="intro-bg"></div>
+    <div class="intro-glow"></div>
+    <div class="intro-rings"><i></i><i></i><i></i></div>
+    <div class="intro-logo" id="intro-logo"><img src="img/logo.jpg" alt=""><span class="shine"></span></div>
+    <div class="intro-word"><span>Flauta Doce</span> <span class="gold">Guia</span></div>
+    <div class="intro-tag">Aprenda flauta doce</div>
+    <div class="intro-credit">Um programa de <b>Fernando Bacelar</b></div>
+    <div class="intro-bar"><i></i></div>
+  </div>
+
+  <!-- Apresentação (primeira vez) -->
+  <div class="onb" id="onb" hidden>
+    <button class="onb-skip" id="onb-skip">Pular</button>
+    <div class="onb-track" id="onb-track">
+      <div class="onb-slide">
+        <div class="onb-art art-img art-wide"><img src="img/onb-afinar.png" alt=""></div>
+        <h2>Afine em segundos</h2>
+        <p>Toque o Lá de referência e o afinador mostra se é preciso puxar ou empurrar a cabeça da flauta doce.</p>
+      </div>
+      <div class="onb-slide">
+        <div class="onb-art art-img art-wide"><img src="img/onb-digitacao.png" alt=""></div>
+        <h2>Cada digitação, tecla por tecla</h2>
+        <p>Veja exatamente quais furos tampar em todas as 25 notas, do Dó grave ao Dó agudo, inclusive a meia-tampa.</p>
+      </div>
+      <div class="onb-slide">
+        <div class="onb-art art-img art-wide"><img src="img/onb-escuta.png" alt=""></div>
+        <h2>O app escuta você</h2>
+        <p>Toque a nota e ele confere na hora. As lições só avançam quando a nota está certa.</p>
+      </div>
+      <div class="onb-slide">
+        <div class="onb-art art-img art-wide"><img src="img/onb-musicas.png" alt=""></div>
+        <h2>Toque músicas de verdade</h2>
+        <p>A partitura corre na tela e o app confere cada nota que você toca. Sete músicas para começar.</p>
+      </div>
+      <div class="onb-slide">
+        <div class="onb-art art-img art-wide"><img src="img/onb-ritmo.png" alt=""></div>
+        <h2>Pegue o ritmo</h2>
+        <p>Metrônomo completo e exercícios que mostram se cada nota entrou no tempo.</p>
+      </div>
+      <div class="onb-slide">
+        <div class="onb-art art-img art-wide"><img src="img/onb-leitura.png" alt=""></div>
+        <h2>Aprenda a ler partitura</h2>
+        <p>Uma nota aparece na pauta e você a toca na flauta. Rodadas de 10 notas, com pontos e recorde.</p>
+      </div>
+    </div>
+    <div class="onb-credit">Um programa de <b>Fernando Bacelar</b></div>
+    <div class="onb-foot">
+      <div class="onb-dots" id="onb-dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="btn btn-primary onb-next" id="onb-next">Próximo</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

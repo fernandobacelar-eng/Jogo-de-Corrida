@@ -1,0 +1,50 @@
+name: Gerar APK da Flauta Doce Guia
+
+on:
+  push:
+    paths:
+      - 'doce-app/**'
+      - '.github/workflows/flauta-doce-apk.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: doce-app
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm ci
+      - run: npx cap sync android
+      - name: Compila o APK (tenta de novo se o repositório de bibliotecas falhar)
+        run: |
+          chmod +x android/gradlew && cd android
+          ./gradlew assembleDebug --no-daemon || (sleep 45 && ./gradlew assembleDebug --no-daemon --refresh-dependencies)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flauta-doce-guia-apk
+          path: doce-app/android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Renomeia o APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk flauta-doce-guia.apk
+      - name: Publica o APK com link direto (release "flauta-doce")
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: flauta-doce
+          target_commitish: ${{ github.sha }}
+          name: Flauta Doce Guia
+          body: |
+            Toque em **flauta-doce-guia.apk** abaixo para baixar e instalar no Android.
+            Link direto: https://github.com/${{ github.repository }}/releases/download/flauta-doce/flauta-doce-guia.apk
+          files: doce-app/flauta-doce-guia.apk
+          make_latest: false

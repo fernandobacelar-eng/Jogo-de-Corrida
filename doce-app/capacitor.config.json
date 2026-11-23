@@ -1,0 +1,6 @@
+{
+  "appId": "com.flautaguia.doce",
+  "appName": "Flauta Doce Guia",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}
