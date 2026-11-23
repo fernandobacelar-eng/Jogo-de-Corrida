@@ -1,0 +1,50 @@
+name: Gerar APK do Sax Guia
+
+on:
+  push:
+    paths:
+      - 'sax-app/**'
+      - '.github/workflows/sax-apk.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sax-app
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm ci
+      - run: npx cap sync android
+      - name: Compila o APK (tenta de novo se o repositório de bibliotecas falhar)
+        run: |
+          chmod +x android/gradlew && cd android
+          ./gradlew assembleDebug --no-daemon || (sleep 45 && ./gradlew assembleDebug --no-daemon --refresh-dependencies)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sax-guia-apk
+          path: sax-app/android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Renomeia o APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk sax-guia.apk
+      - name: Publica o APK com link direto (release "sax")
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: sax
+          target_commitish: ${{ github.sha }}
+          name: Sax Guia
+          body: |
+            Toque em **sax-guia.apk** abaixo para baixar e instalar no Android.
+            Link direto: https://github.com/${{ github.repository }}/releases/download/sax/sax-guia.apk
+          files: sax-app/sax-guia.apk
+          make_latest: false

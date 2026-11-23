@@ -24,3 +24,11 @@ App separado para flauta doce soprano (digitação barroca), com as mesmas funç
 - **APK:** https://github.com/fernandobacelar-eng/Jogo-de-Corrida/releases/download/flauta-doce/flauta-doce-guia.apk
 - Pasta: `doce-app/` · Identificador Android: `com.flautaguia.doce`
 - Imagens e logotipo provisórios.
+
+## Sax Guia (novo)
+
+App separado para saxofone alto em Mi♭, com as mesmas funções.
+
+- **APK:** https://github.com/fernandobacelar-eng/Jogo-de-Corrida/releases/download/sax/sax-guia.apk
+- Pasta: `sax-app/` · Identificador Android: `com.flautaguia.sax`
+- Imagens e logotipo provisórios.

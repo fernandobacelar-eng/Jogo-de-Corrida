@@ -1,0 +1,6 @@
+{
+  "appId": "com.flautaguia.sax",
+  "appName": "Sax Guia",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}

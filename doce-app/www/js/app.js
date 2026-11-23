@@ -644,11 +644,11 @@ function celebrate() {
 // ---------- Tela Início ----------
 const TIPS_DAY = [
   'Aqueça a flauta tocando notas longas por um minuto antes de afinar: flauta fria soa mais baixo.',
-  'Para subir uma oitava, sopre mais rápido, e não mais forte. Diminua a abertura dos lábios.',
-  'Mantenha os dedos curvados e perto das teclas, mesmo quando estiverem levantados.',
+  'Para as notas agudas, use a meia-tampa do polegar e sopre só um pouco mais firme.',
+  'Mantenha os dedos curvados e perto dos furos, mesmo quando estiverem levantados.',
   'Inspire pela barriga, sem levantar os ombros. Solte o ar como um fio longo e constante.',
   'Estude um pouco todos os dias: 15 minutos diários rendem mais que duas horas uma vez por semana.',
-  'Se o som sair com muito ar, gire a flauta levemente para fora e diminua a abertura dos lábios.',
+  'Se a flauta chiar, confira se todos os furos estão bem tampados com a polpa dos dedos.',
   'Comece cada nota com a língua dizendo "tu", sem voz. Evite começar com a garganta.',
   'Depois de tocar, passe a vareta com um pano por dentro de cada parte da flauta.',
 ];
